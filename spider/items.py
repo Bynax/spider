@@ -1,0 +1,71 @@
+# -*- coding: utf-8 -*-
+
+# Define here the models for your scraped items
+#
+# See documentation in:
+# https://doc.scrapy.org/en/latest/topics/items.html
+
+import scrapy
+
+
+class SpiderItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    pass
+
+
+class HotelLinkItem(scrapy.Item):
+    city_name = scrapy.Field()
+    hotel_link = scrapy.Field()
+
+
+# page 表示是第几页 urls是一个列表，表示该页所有的url
+class PageItem(scrapy.Item):
+    page = scrapy.Field()
+    urls = scrapy.Field()
+
+
+class CityItem(scrapy.Item):
+    # 城市编号自动生成/点评总数量最后统计 这两个字段不能爬取
+    city_id = scrapy.Field()
+    city_name = scrapy.Field()  # 城市名称
+    province = scrapy.Field()  # 所属省份
+    hotel_num = scrapy.Field()  # 酒店总数量
+
+
+class HotelItem(scrapy.Item):
+    # 酒店id
+    hotel_name_cn = scrapy.Field()  # 酒店名称
+    hotel_name_en = scrapy.Field()  # 英文名称
+    youhui = scrapy.Field()  # 优惠价钱和网站
+    rank = scrapy.Field()  # 酒店排名
+    comment_num = scrapy.Field()  # 评论数量
+    grade = scrapy.Field()  # 酒店分数 1-5
+    address = scrapy.Field()  # 地址
+    pics_num = scrapy.Field()  # 照片张数
+    feature = scrapy.Field()  # 酒店特色
+    star = scrapy.Field()  # 酒店星级
+    rooms = scrapy.Field()  # 房间数
+    url = scrapy.Field()  # 酒店官网
+    room_type = scrapy.Field()  # 客房类型
+    award = scrapy.Field()  # 奖项
+
+
+class CommentItem(scrapy.Item):
+    # 评论id自增
+    hotel_id = scrapy.Field()  # 所属酒店id
+    join_date = scrapy.Field()  # 入住日期
+    comment_date = scrapy.Field()  # 评论时间
+    person = scrapy.Field()  # 评论人id
+    comment_grade = scrapy.Field()  # 评论分数（5分）
+    comment_thx = scrapy.Field()  # 评论被感谢次数
+    content = scrapy.Field()  # 评论内容
+    reply = scrapy.Field()  # 回复内容
+
+
+class PersonItem(scrapy.Item):  # 评论人
+    pass
+
+
+class NeighborHotel(scrapy.Item):  # 附近酒店
+    pass
