@@ -35,6 +35,7 @@ class CityItem(scrapy.Item):
 
 class HotelItem(scrapy.Item):
     # 酒店id
+    hotel_id = scrapy.Field()
     hotel_name_cn = scrapy.Field()  # 酒店名称
     hotel_name_en = scrapy.Field()  # 英文名称
     youhui = scrapy.Field()  # 优惠价钱和网站
@@ -44,11 +45,12 @@ class HotelItem(scrapy.Item):
     address = scrapy.Field()  # 地址
     pics_num = scrapy.Field()  # 照片张数
     feature = scrapy.Field()  # 酒店特色
+    style = scrapy.Field()
     star = scrapy.Field()  # 酒店星级
     rooms = scrapy.Field()  # 房间数
-    url = scrapy.Field()  # 酒店官网
     room_type = scrapy.Field()  # 客房类型
     award = scrapy.Field()  # 奖项
+    review_addresses = scrapy.Field()  # 评论页面列表
 
 
 class CommentItem(scrapy.Item):
