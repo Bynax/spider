@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from scrapy import Request, Spider
-import scrapy
 import re
 import math
 from spider.items import HotelItem
@@ -16,7 +15,7 @@ class TripadvSpider(Spider):
     allowed_domains = ['tripadvisor.cn']  # 允许爬取的范围
 
     def start_requests(self):
-        hotel_detail_url = "/Hotel_Review-g294212-d595677-Reviews-Park_Plaza_Wangfujing-Beijing.html"
+        hotel_detail_url = "/Hotel_Review-g294212-d1916310-Reviews-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html"
         yield Request(pre_url + hotel_detail_url, callback=self.parse_detail_hotel)
 
     def parse_detail_hotel(self, response):
@@ -34,6 +33,16 @@ class TripadvSpider(Spider):
         xpath_rooms = '//*[@id="ABOUT_TAB"]/div[2]/div[3]/div[2]/div[3]/div[2]/div/text()'  # 房间数
         xpath_room_type = '//*[@id="ABOUT_TAB"]/div[2]/div[3]/div[2]/div[1]/div[6]/div/text()'  # 客房类型
         xpath_award = '//*[@class="sub_content badges is-shown-at-desktop"]'  # 奖项
+
+        # 照片数量
+
+        pics_num = response.xpath(xpath_pics_num).extract()
+        if pics_num is None:
+            pic_num = 0
+        else:
+            pic_num = ''.join(pics_num)
+        hotel['pics_num'] = pic_num
+        print(pic_num)
 
         # 点评数量
         review = response.xpath(xpath_review_count)
@@ -111,11 +120,7 @@ class TripadvSpider(Spider):
         # 宾馆特色
         try:
             styleObj = response.xpath('//*[@class="textitem style"]/text()').extract()
-            styles = []
-            for style in styleObj:
-                styles.append(style)
-            b = ','
-            hotelStyle = b.join(styles)
+            hotelStyle = ",".join(styleObj)
         except:
             hotelStyle = None
 
@@ -124,21 +129,29 @@ class TripadvSpider(Spider):
 
         # 酒店特色
         try:
+            # 不带有酒店说明的xpath
             feature = response.xpath(xpath_feature).extract()
-            print(type(feature))
-            print(feature)
-            hotel_feature = ",".join(feature)
+            # 带有酒店说明的xpath
+            feature_with_instr = response.xpath(
+                '//*[@id="ABOUT_TAB"]/div[2]/div[3]/div/div/div[2]/div[2]/div/div/text()').extract()
+            hotel_feature = ",".join(feature + feature_with_instr)
+
         except:
             hotel_feature = None
-
         hotel['feature'] = hotel_feature
         print(hotel_feature)
 
         # 客房类型
         try:
+            # 不带说明
             r_type = response.xpath(xpath_room_type).extract()
-            print(type(r_type))
-            room_type = ",".join(r_type)
+
+            # 带说明
+            r_type_instr = response.xpath(
+                '//*[@id="ABOUT_TAB"]/div[2]/div[4]/div[2]/div[1]/div[4]/div/text()').extract()
+
+            room_type = ",".join(r_type + r_type_instr)
+
         except:
             room_type = None
 
@@ -155,7 +168,11 @@ class TripadvSpider(Spider):
 
         # 房间数量
         try:
+            # 不带说明
             rooms = response.xpath(xpath_rooms).extract()
+            # 带说明
+            rooms_instr = response.xpath('//*[@id="ABOUT_TAB"]/div[2]/div[4]/div[2]/div[3]/div[2]/div/text()').extract()
+            rooms = ",".join(rooms + rooms_instr)
         except:
             rooms = -1
         hotel['rooms'] = rooms
@@ -179,7 +196,9 @@ class TripadvSpider(Spider):
             pass
 
         hotel['youhui'] = prices
-        print(prices)
+
+        hotel['hotel_city'] = ''
+        hotel['hotel_id'] = ''
 
         #
 
@@ -200,3 +219,5 @@ class TripadvSpider(Spider):
         # str2 = '在6,648家'
         # print("".join(re.findall('\d+', str1)))
         # print("".join(re.findall('\d+', str2)))
+
+

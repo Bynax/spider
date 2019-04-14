@@ -109,6 +109,8 @@ class RandomUserAgent(object):
         ua = UserAgent(verify_ssl=False)
         request.meta['proxy'] = 'http://{}'.format("61.176.223.7:58822")
         request.headers['User-Agent'] = ua.random
+        if spider.name == 'review_detail':
+            request.headers['x-requested-with'] = 'XMLHttpRequest'
 
     def process_response(self, request, response, spider):
         '''对返回的response处理'''
