@@ -7,6 +7,9 @@ from spider.items import HotelItem
 pre_url = 'https://www.tripadvisor.cn'
 
 
+
+# 附近酒店href //*[@id="taplc_resp_hr_nearby_0"]/div/div[3]/div[1]/a/@href
+
 # 后续处理可以设置宾馆的id，查看是否已爬取，设置断点继续
 # 宾馆code提取的正则表达式为：code = re.findall('d\d+(?=-)', hotel_url)
 
@@ -199,25 +202,3 @@ class TripadvSpider(Spider):
 
         hotel['hotel_city'] = ''
         hotel['hotel_id'] = ''
-
-        #
-
-        # if __name__ == '__main__':
-        #     # hotel_detail_url = "/Hotel_Review-g294212-d595677-Reviews-Park_Plaza_Wangfujing-Beijing.html"
-        #     # url = pre_url + hotel_detail_url
-        #     # code = re.findall('d\d+(?=-)', url)[0]
-        #     # print(code)
-        #
-        #     # url_start = re.search('.+Reviews', url)
-        #     # review_page_urls = []
-        #     # review_page_urls.append(url)
-        #     # for n in range(1, math.ceil(20 / 5)):
-        #     #     review_page_url = re.sub('.+Reviews', url_start.group() + '-or' + str(n * 5), url)
-        #     #     review_page_urls.append(review_page_url)
-        #     #     print(review_page_url)
-        #     str1 = '排名第53'
-        # str2 = '在6,648家'
-        # print("".join(re.findall('\d+', str1)))
-        # print("".join(re.findall('\d+', str2)))
-
-

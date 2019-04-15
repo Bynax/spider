@@ -26,10 +26,9 @@ class JsonWriterPipeline(object):
             with open('{}.json'.format(spider.name), "a+", encoding="utf-8")as f:
                 f.write(line)
             return item
-        elif spider.name == '':
-            pass
-            return item
+        # 其他的字段都是表，写入csv文件
         else:
+
             return item
 
     # def open_spider(self, spider):
