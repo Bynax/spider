@@ -3,11 +3,12 @@ import scrapy
 import json
 import re
 from spider.items import HotelLinkItem
+import requests
 
 # 给定城市，爬取固定页数该城市的宾馆
 prefix = "https://www.tripadvisor.cn"
 
-page_limit = 3
+page_limit = 40
 
 
 class HotelUrlSpider(scrapy.Spider):
@@ -15,7 +16,7 @@ class HotelUrlSpider(scrapy.Spider):
     allowed_domains = ['tripadvisor.cn']
 
     def __init__(self):
-        with open("a.json", "r+", encoding="utf-8")as f:
+        with open("city_url.json", "r+", encoding="utf-8")as f:
             self.source_data = json.loads("".join(f.readlines()))
 
     def start_requests(self):
@@ -24,7 +25,8 @@ class HotelUrlSpider(scrapy.Spider):
                 if k == 'urls':
                     for url in v:
                         url = prefix + url
-                        yield scrapy.Request(url=url, callback=self.parse_initial)  # 定义errorback字段，自定义出错函数
+                        yield scrapy.Request(url=url, callback=self.parse_initial,
+                                             meta={'max': 3})  # 定义errorback字段，自定义出错函数
 
     def parse_initial(self, response):
         div = response.xpath('//*[@class="pageNumbers"]/a')
@@ -37,7 +39,7 @@ class HotelUrlSpider(scrapy.Spider):
         # 生成下几页请求并返回
         for i in range(1, page_num):
             page_url = re.sub('.+\d+', url_start.group() + '-oa' + str(i * 30), response.request.url)
-            yield scrapy.Request(page_url, callback=self.parse)
+            yield scrapy.Request(page_url, callback=self.parse, meta={'max': 3})
 
         # 返回item
         hotel_link = response.xpath('//*[@class="listing_title"]/a/@href').extract()
@@ -56,6 +58,5 @@ class HotelUrlSpider(scrapy.Spider):
             hotel_link_item = HotelLinkItem()
             hotel_link_item['city_name'] = city_name
             hotel_link_item['hotel_link'] = link
+            print("返回结果")
             yield hotel_link_item
-
-

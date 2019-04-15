@@ -6,7 +6,12 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from scrapy.exceptions import IgnoreRequest
 from fake_useragent import UserAgent
+import requests
+
+order_id = '866020541912409297'
+current_proxy = '123.206.99.143:56424'
 
 
 class SpiderSpiderMiddleware(object):
@@ -105,9 +110,13 @@ class SpiderDownloaderMiddleware(object):
 
 
 class RandomUserAgent(object):
+
     def process_request(self, request, spider):
         ua = UserAgent(verify_ssl=False)
-        request.meta['proxy'] = 'http://{}'.format("61.176.223.7:58822")
+        print('开始请求{}'.format(request.url))
+        current_final_proxy = 'http://{}@{}'.format("cba447ab2430:h7y1u9j1tr", current_proxy)
+        print(current_final_proxy)
+        request.meta['proxy'] = current_final_proxy
         request.headers['User-Agent'] = ua.random
         if spider.name == 'review_detail':
             request.headers['x-requested-with'] = 'XMLHttpRequest'
@@ -115,18 +124,53 @@ class RandomUserAgent(object):
     def process_response(self, request, response, spider):
         '''对返回的response处理'''
         # 如果返回的response状态不是200，重新生成当前request对象
-        # if response.status != 200:
-        #     proxy = 'http://127.0.0.1:8087'
-        #     # print("this is response ip:" + proxy)
-        #     # 对当前reque加上代理
-        #     request.meta['proxy'] = proxy
-        #     return request
+        if response.status != 200:
+            if int(request.meta['max']) > 0:
+                print('状态码非200')
+                # 请求新的地址
+                current_proxy = requests.get(
+                    'https://proxy.mimvp.com/api/fetchsecret.php?orderid={}&num=1&http_type=3&result_fields=1'.format(
+                        order_id)).text
+                current_final_proxy = 'http://{}@{}'.format("cba447ab2430:h7y1u9j1tr", current_proxy)
+                # print("this is response ip:" + proxy)
+                # 对当前reque加上代理
+                request.meta['proxy'] = current_final_proxy
+                print("更换代理为{}".format(current_final_proxy))
+                request.meta['max'] = (int(request.meta['max'])) - 1
+                return request
+            else:
+                raise IgnoreRequest("超过最大请求，{}\t被跳过".format(request.url))
+        print("正常返回")
         return response
 
     def process_exception(self, request, exception, spider):
-        pass
         # 出现异常时（超时）使用代理
-        # print("\n出现异常，正在使用代理重试....\n")
-        # proxy = 'http://127.0.0.1:8087'
-        # request.meta['proxy'] = proxy
-        # return request
+        print(exception.name)
+        print("\n出现异常，正在使用代理重试....\n")
+        if request.meta['max'] > 0:
+            current_proxy = requests.get(
+                'https://proxy.mimvp.com/api/fetchsecret.php?orderid={}&num=1&http_type=3&result_fields=1'.format(
+                    order_id)).text
+            current_final_proxy = 'http://{}@{}'.format("cba447ab2430:h7y1u9j1tr", current_proxy)
+            # 对当前reque加上代理
+            request.meta['proxy'] = current_final_proxy
+            print("更换代理为{}".format(current_final_proxy))
+            request.meta['max'] = (int(request.meta['max'])) - 1
+            return request
+        else:
+            raise IgnoreRequest("超过最大请求，{}\t被跳过".format(request.url))
+
+
+if __name__ == '__main__':
+    # proxs = spider_proxy()
+    # print(proxs)
+    ua = UserAgent(verify_ssl=False)
+
+    proxies = {
+        'https': 'http://cba447ab2430:h7y1u9j1tr@123.206.99.143:56424'
+    }
+    headers = {'user-agent': ua.random}
+    res = requests.get('https://www.tripadvisor.cn/Hotels-g294212-oa120-Beijing-Hotels.html', headers=headers,
+                       proxies=proxies, timeout=30)
+    print(res.status_code)
+    print(res.content)

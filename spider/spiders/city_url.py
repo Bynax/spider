@@ -2,19 +2,13 @@
 from scrapy import Request, Spider
 from spider.items import PageItem
 
-
-
 # 51页的时候是20*50
 
 # def
 
 
-# https://www.tripadvisor.cn/Hotels-g294211-oa1000-China-Hotels.html
-# https://www.tripadvisor.cn/Hotels-g294211-oa940-China-Hotels.html
-
-
 # 固定爬取50页的城市
-page_num = 51
+page_num = 1
 # page_num = 2
 tempelt = "https://www.tripadvisor.cn/Hotels-g294211-oa{}-China-Hotels.html"
 
@@ -29,7 +23,8 @@ class CityUrlSpider(Spider):
         city_urls = [first_url]
         for i in range(1, page_num):
             city_urls.append(tempelt.format(20 * i))
-        return [Request(city_url, self.parse, meta={'page_num': city_urls.index(city_url)}) for city_url in city_urls]
+        return [Request(city_url, self.parse, meta={'max': 3, 'page_num': city_urls.index(city_url)}) for city_url in
+                city_urls]
 
     def parse(self, response):
         urls = PageItem()

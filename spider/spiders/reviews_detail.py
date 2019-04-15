@@ -32,16 +32,12 @@ class ReviewsDetailSpider(scrapy.Spider):
         noquotes = response.xpath('//*/span[@class="noQuotes"]').extract()
         title = re.search('(?<=>)[\s\S]*(?=<)', str(noquotes[0]))
         reviewTitle = title.group()
-        print('评论题目是：', end='')
-        print(reviewTitle)
         comment['title'] = reviewTitle
 
         # 评论内容
         p = response.xpath('//*/p[@class="partial_entry"]').extract()
         body = re.search('(?<=>).*(?=<)', str(p[0]))
         reviewText = re.sub('<br>|<br/>', '', body.group())
-        print('评论内容是：', end='')
-        print(reviewText)
         comment['content'] = reviewText
 
         # 评论日期
@@ -49,14 +45,10 @@ class ReviewsDetailSpider(scrapy.Spider):
         review_date = re.search('(?<=title=").*(?=">)', str(ratingDate[0]))
         time_format = datetime.datetime.strptime(review_date.group(), '%B %d, %Y')
         reviewDate = time_format.strftime('%Y/%m/%d')
-        print('评论日期：', end='')
-        print(reviewDate)
         comment['comment_date'] = reviewDate
 
         ratingObj = re.search('(?<=span class="ui_bubble_rating bubble_)\d(?=0)', str(response.text))
         reviewRating = ratingObj.group()
-        print('评论等级：', end='')
-        print(reviewRating)
         comment['rating'] = reviewRating
 
         uid_src = response.xpath("//*[@class='member_info']").extract()

@@ -17,12 +17,13 @@ class JsonWriterPipeline(object):
     def process_item(self, item, spider):
         if spider.name == 'hotel_url':
             name = item['city_name']
+            print("写入{}".format(name))
             with open("hotel_links/{}_hotels.txt".format(name), "a+", encoding="utf-8")as f:
                 f.write(item['hotel_link'] + "\n")
             return item
         elif spider.name == 'city_url':
             line = json.dumps(dict(item)) + "\n"
-            with open('{}.json'.format(spider.name), "w", encoding="utf-8")as f:
+            with open('{}.json'.format(spider.name), "a+", encoding="utf-8")as f:
                 f.write(line)
             return item
         elif spider.name == '':
