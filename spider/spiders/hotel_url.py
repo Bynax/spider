@@ -63,7 +63,4 @@ class HotelUrlSpider(scrapy.Spider):
             yield hotel_link_item
 
 
-if __name__ == '__main__':
-    for root, dirs, files in os.walk('/Users/bohuanshi/PycharmProjects/spider/hotel_links'):
-        for file in files:
-            print(os.path.join(root,file))
+

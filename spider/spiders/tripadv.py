@@ -2,36 +2,82 @@
 from scrapy import Request, Spider
 import re
 import math
-from spider.items import HotelItem
+from spider.items import HotelItem, NeighborHotel
 import os
 
 pre_url = 'https://www.tripadvisor.cn'
 
 
-# 附近酒店href //*[@id="taplc_resp_hr_nearby_0"]/div/div[3]/div[1]/a/@href
-
 # 后续处理可以设置宾馆的id，查看是否已爬取，设置断点继续
-# 宾馆code提取的正则表达式为：code = re.findall('d\d+(?=-)', hotel_url)
+
+def parse_city_id(url):
+    return re.findall('g\d+(?=-)', url)[0]
+
+
+def parse_hotel_id(url):
+    result = []
+    if type(url) is list:
+        for i in range(len(url)):
+            result.append(re.findall('d\d+(?=-)', url[i])[0])
+        return result
+    return re.findall('d\d+(?=-)', url)[0]
+
 
 class TripadvSpider(Spider):
     name = 'hotel_detail'  # 爬虫名
     allowed_domains = ['tripadvisor.cn']  # 允许爬取的范围
 
-    def __init__(self):
-        for root, dirs, files in os.walk('/Users/bohuanshi/PycharmProjects/spider/hotel_links'):
-            for file in files:
-                print(os.path.join(root, file))
+    # def __init__(self):
+    #     for root, dirs, files in os.walk('/Users/bohuanshi/PycharmProjects/spider/hotel_links'):
+    #         for file in files:
+    #             print(os.path.join(root, file))
 
     def start_requests(self):
         hotel_detail_url = "/Hotel_Review-g294212-d1916310-Reviews-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html"
         yield Request(pre_url + hotel_detail_url, callback=self.parse_detail_hotel)
+
+    def parse_neighbor_initial(self, response):
+        xpath_neibor_nums = '//*[@id="taplc_main_pagination_bar_dusty_hotels_resp_0"]/div/div/div/div/a/text()'  # 页数列表，最后一项为页数
+        neighbor_nums = response.xpath(xpath_neibor_nums).extract()[-1]
+        links = response.xpath('//*[@class="listing_title"]/a/@href').extract()
+        distance = response.xpath('//*[@class="distance linespace is-shown-at-mobile"]/div/b/text()').extract()
+        hotel_id = parse_hotel_id(links)
+        target_id = parse_hotel_id(response.request.url)
+        len1 = len(hotel_id)
+        len2 = len(distance)
+        item_num = min(len1, len2)
+        for i in range(item_num):
+            neighbor = NeighborHotel()
+            neighbor['hotel_id'] = hotel_id[i]
+            neighbor['target_id'] = target_id
+            neighbor['distance'] = distance[i]
+            yield neighbor
+
+        url_start = re.search('.+\d+', response.request.url, re.M | re.I)
+        for i in range(int(neighbor_nums)):
+            page_url = re.sub('.+\d+', url_start.group() + '-oa' + str(i * 30), response.request.url)
+            yield Request(page_url, callback=self.parse_neighbor)
+
+    def parse_neighbor(self, response):
+        links = response.xpath('//*[@class="listing_title"]/a/@href').extract()
+        distance = response.xpath('//*[@class="distance linespace is-shown-at-mobile"]/div/b/text()').extract()
+        hotel_id = parse_hotel_id(links)
+        target_id = parse_hotel_id(response.request.url)
+        len1 = len(hotel_id)
+        len2 = len(distance)
+        item_num = min(len1, len2)
+        for i in range(item_num):
+            neighbor = NeighborHotel()
+            neighbor['hotel_id'] = hotel_id[i]
+            neighbor['target_id'] = target_id
+            neighbor['distance'] = distance[i]
+            yield neighbor
 
     def parse_detail_hotel(self, response):
         hotel = HotelItem()
         xpath_review_count = '//*[@id="taplc_resp_hr_atf_hotel_info_0"]/div/div[1]/div/a/span/text()'  # 评论数量
         xpath_hotel_name = '//*[@id="HEADING"]'  #
         xpath_youhui = '//*[@id="taplc_resp_hr_atf_meta_0"]/div/div/div'  # 优惠
-        # /div[4]/div[1]/div[1]/div/div/span[1]
         xpath_rank = '//*[@id="taplc_resp_hr_atf_hotel_info_0"]/div/div[1]/div/div/span'  # 酒店排名
         xpath_grade = '//*[@id="OVERVIEW"]/div[2]/div[1]/div/span[1]/text()'  # 酒店分数 1-5
         xpath_address = '//*/span[@class="street-address"]/text()'  # 地址
@@ -42,17 +88,14 @@ class TripadvSpider(Spider):
         xpath_room_type = '//*[@id="ABOUT_TAB"]/div[2]/div[3]/div[2]/div[1]/div[6]/div/text()'  # 客房类型
         xpath_award = '//*[@class="sub_content badges is-shown-at-desktop"]'  # 奖项
         xpath_neighbor = '//*[@id="taplc_resp_hr_nearby_0"]/div/div[3]/div[1]/a/@href'  # 附近酒店链接
-        xpath_neibor_nums = '//*[@id="taplc_main_pagination_bar_dusty_hotels_resp_0"]/div/div/div/div/a'  # 页数列表，最后一项为页数
 
         # 照片数量
-
         pics_num = response.xpath(xpath_pics_num).extract()
         if pics_num is None:
             pic_num = 0
         else:
             pic_num = ''.join(pics_num)
         hotel['pics_num'] = pic_num
-        print(pic_num)
 
         # 点评数量
         review = response.xpath(xpath_review_count)
@@ -96,12 +139,10 @@ class TripadvSpider(Spider):
 
         hotel['hotel_name_cn'] = cn_name
         hotel['hotel_name_en'] = en_name
-        print(cn_name, en_name)
 
         # 酒店评分得分
         hotel_grade = response.xpath(xpath_grade).extract_first()
         hotel['grade'] = hotel_grade
-        print(hotel_grade)
 
         # 具体地址
         try:
@@ -109,7 +150,6 @@ class TripadvSpider(Spider):
         except:
             hotel_address = None
         hotel['address'] = hotel_address
-        print(hotel_address)
 
         # 奖项与认证
         badgesObj = response.xpath(xpath_award).extract()
@@ -125,7 +165,6 @@ class TripadvSpider(Spider):
         except:
             pass
         hotel['award'] = hotelAwards
-        print(hotelAwards)
 
         # 宾馆特色
         try:
@@ -135,7 +174,6 @@ class TripadvSpider(Spider):
             hotelStyle = None
 
         hotel['style'] = hotelStyle
-        print(hotelStyle)
 
         # 酒店特色
         try:
@@ -149,7 +187,6 @@ class TripadvSpider(Spider):
         except:
             hotel_feature = None
         hotel['feature'] = hotel_feature
-        print(hotel_feature)
 
         # 客房类型
         try:
@@ -166,7 +203,6 @@ class TripadvSpider(Spider):
             room_type = None
 
         hotel['room_type'] = room_type
-        print(room_type)
 
         # 酒店星级
         try:
@@ -174,7 +210,6 @@ class TripadvSpider(Spider):
         except:
             star = None
         hotel['star'] = star
-        print(star)
 
         # 房间数量
         try:
@@ -186,7 +221,6 @@ class TripadvSpider(Spider):
         except:
             rooms = -1
         hotel['rooms'] = rooms
-        print(rooms)
 
         # 优惠价钱
         prices = []
@@ -203,13 +237,15 @@ class TripadvSpider(Spider):
                 for i in range(min(len(name), len(price))):
                     prices.append("{}:{}".format(name[i], price[i]))
         except:
-            pass
+            prices = None
 
         hotel['youhui'] = prices
+        hotel['hotel_city'] = parse_city_id(response.request.url)
+        hotel['hotel_id'] = parse_hotel_id(response.request.url)
+        yield hotel
 
-        hotel['hotel_city'] = ''
-        hotel['hotel_id'] = ''
+        neighbor = response.xpath(xpath_neighbor).extract()[-1]
+        neighbor_url = "{}{}".format(pre_url, neighbor)
 
-
-        # https://www.tripadvisor.cn/HotelsNear-g294212-d1916310-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html
-        # https://www.tripadvisor.cn/HotelsNear-g294212-d1916310-oa30-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html
+        # 字符串
+        yield Request(neighbor_url, callback=self.parse_neighbor_initial)

@@ -71,4 +71,6 @@ class PersonItem(scrapy.Item):  # 评论人
 
 
 class NeighborHotel(scrapy.Item):  # 附近酒店
-    pass
+    hotel_id = scrapy.Field()  # 酒店id
+    target_id = scrapy.Field()  # 距离酒店的id
+    distance = scrapy.Field()  # 距离

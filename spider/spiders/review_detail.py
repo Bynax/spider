@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import re
-import requests
 from scrapy import FormRequest, Request
 from spider.items import CommentItem
 import datetime
