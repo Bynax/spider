@@ -4,6 +4,7 @@ import json
 import re
 from spider.items import HotelLinkItem
 import requests
+import os
 
 # 给定城市，爬取固定页数该城市的宾馆
 prefix = "https://www.tripadvisor.cn"
@@ -60,3 +61,9 @@ class HotelUrlSpider(scrapy.Spider):
             hotel_link_item['hotel_link'] = link
             print("返回结果")
             yield hotel_link_item
+
+
+if __name__ == '__main__':
+    for root, dirs, files in os.walk('/Users/bohuanshi/PycharmProjects/spider/hotel_links'):
+        for file in files:
+            print(os.path.join(root,file))

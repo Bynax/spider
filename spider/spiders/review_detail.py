@@ -11,6 +11,7 @@ detail_review_url = 'https://www.tripadvisor.com/OverlayWidgetAjax'
 
 
 class ReviewDetailSpider(scrapy.Spider):
+
     name = 'review_detail'
     allowed_domains = ['tripadvisor.com', 'tripadvisor.cn']
     start_urls = [

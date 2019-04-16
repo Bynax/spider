@@ -3,9 +3,9 @@ from scrapy import Request, Spider
 import re
 import math
 from spider.items import HotelItem
+import os
 
 pre_url = 'https://www.tripadvisor.cn'
-
 
 
 # 附近酒店href //*[@id="taplc_resp_hr_nearby_0"]/div/div[3]/div[1]/a/@href
@@ -16,6 +16,11 @@ pre_url = 'https://www.tripadvisor.cn'
 class TripadvSpider(Spider):
     name = 'hotel_detail'  # 爬虫名
     allowed_domains = ['tripadvisor.cn']  # 允许爬取的范围
+
+    def __init__(self):
+        for root, dirs, files in os.walk('/Users/bohuanshi/PycharmProjects/spider/hotel_links'):
+            for file in files:
+                print(os.path.join(root, file))
 
     def start_requests(self):
         hotel_detail_url = "/Hotel_Review-g294212-d1916310-Reviews-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html"
@@ -36,6 +41,8 @@ class TripadvSpider(Spider):
         xpath_rooms = '//*[@id="ABOUT_TAB"]/div[2]/div[3]/div[2]/div[3]/div[2]/div/text()'  # 房间数
         xpath_room_type = '//*[@id="ABOUT_TAB"]/div[2]/div[3]/div[2]/div[1]/div[6]/div/text()'  # 客房类型
         xpath_award = '//*[@class="sub_content badges is-shown-at-desktop"]'  # 奖项
+        xpath_neighbor = '//*[@id="taplc_resp_hr_nearby_0"]/div/div[3]/div[1]/a/@href'  # 附近酒店链接
+        xpath_neibor_nums = '//*[@id="taplc_main_pagination_bar_dusty_hotels_resp_0"]/div/div/div/div/a'  # 页数列表，最后一项为页数
 
         # 照片数量
 
@@ -202,3 +209,7 @@ class TripadvSpider(Spider):
 
         hotel['hotel_city'] = ''
         hotel['hotel_id'] = ''
+
+
+        # https://www.tripadvisor.cn/HotelsNear-g294212-d1916310-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html
+        # https://www.tripadvisor.cn/HotelsNear-g294212-d1916310-oa30-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html
