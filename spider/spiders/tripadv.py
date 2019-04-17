@@ -69,7 +69,7 @@ class TripadvSpider(Spider):
             yield neighbor
 
         url_start = re.search('.+\d+', response.request.url, re.M | re.I)
-        page_num = min(int(neighbor_nums),80)
+        page_num = min(int(neighbor_nums), 80)
         for i in range(page_num):
             page_url = re.sub('.+\d+', url_start.group() + '-oa' + str(i * 30), response.request.url)
             yield Request(page_url, callback=self.parse_neighbor, meta={'max': 3})
@@ -120,7 +120,7 @@ class TripadvSpider(Spider):
         else:
             textObj = re.sub(',', '', review.extract_first())
             text = re.search('\d+', textObj)
-            review_count = int(text.group())
+            review_count = text.group()
         hotel['comment_num'] = review_count
 
         # 找出评论页面
@@ -271,7 +271,6 @@ class TripadvSpider(Spider):
 
         # 对每一页的review解析出对应的review详情页面
         for quote in review:
-            print(quote)
             reviewObj = re.search('/ShowUserReviews.+html', str(quote.extract()), re.M | re.I)
             id = re.search('(?<=r)\d+', reviewObj.group()).group()
             params = {'Mode': 'EXPANDED_HOTEL_REVIEWS',

@@ -26,7 +26,7 @@ class PageItem(scrapy.Item):
 
 
 class CityItem(scrapy.Item):
-    # 城市编号自动生成/点评总数量最后统计 这两个字段不能爬取
+    # 点评总数量最后统计 这个字段不能爬取
     city_id = scrapy.Field()
     city_name = scrapy.Field()  # 城市名称
     province = scrapy.Field()  # 所属省份
@@ -60,8 +60,9 @@ class CommentItem(scrapy.Item):
     comment_date = scrapy.Field()  # 评论时间
     person = scrapy.Field()  # 评论人id
     content = scrapy.Field()  # 评论内容
-    reply = scrapy.Field()  # 回复内容
     rating = scrapy.Field()
+
+
 
 
 class PersonItem(scrapy.Item):  # 评论人
