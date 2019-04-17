@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10f715dd-f5c0-48fe-a5b9-4895e18fece2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/spider.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/spider.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spider/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/middlewares.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spider/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/pipelines.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spider/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spider/spiders/tripadv.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/spiders/tripadv.py" afterDir="false" />
     </list>
@@ -16,53 +18,62 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/spider$reviews_detail.coverage" NAME="reviews_detail Coverage Results" MODIFIED="1555219736935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
-    <SUITE FILE_PATH="coverage/spider$hotel_url.coverage" NAME="hotel_url Coverage Results" MODIFIED="1555147349307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
+    <SUITE FILE_PATH="coverage/spider$hotel_url.coverage" NAME="hotel_url Coverage Results" MODIFIED="1555375425410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
     <SUITE FILE_PATH="coverage/spider$city_url.coverage" NAME="city_url Coverage Results" MODIFIED="1555122110307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
-    <SUITE FILE_PATH="coverage/spider$tripadv.coverage" NAME="tripadv Coverage Results" MODIFIED="1555204329065" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
+    <SUITE FILE_PATH="coverage/spider$tripadv.coverage" NAME="tripadv Coverage Results" MODIFIED="1555486194767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
     <SUITE FILE_PATH="coverage/spider$review_detail.coverage" NAME="review_detail Coverage Results" MODIFIED="1555218224620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
+    <SUITE FILE_PATH="coverage/spider$pipelines.coverage" NAME="pipelines Coverage Results" MODIFIED="1555516085396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
+    <SUITE FILE_PATH="coverage/spider$middlewares.coverage" NAME="middlewares Coverage Results" MODIFIED="1555293802994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-1980363279">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="7" />
+          <entry key="project.closed" value="15" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.5" value="2" />
-          <entry key="project.open.time.6" value="2" />
-          <entry key="project.open.time.7" value="1" />
-          <entry key="project.opened" value="8" />
+          <entry key="project.open.time.6" value="7" />
+          <entry key="project.open.time.7" value="3" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
+          <entry key="cfg" value="1" />
+          <entry key="gitignore" value="1" />
+          <entry key="hotel,json" value="1" />
           <entry key="html" value="1" />
           <entry key="jl" value="1" />
-          <entry key="json" value="20" />
-          <entry key="py" value="47" />
+          <entry key="json" value="48" />
+          <entry key="py" value="64" />
           <entry key="scrapy" value="1" />
-          <entry key="txt" value="32" />
+          <entry key="txt" value="68" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="HTML" value="1" />
-          <entry key="JSON" value="20" />
-          <entry key="PLAIN_TEXT" value="33" />
-          <entry key="Python" value="48" />
+          <entry key="Ini" value="1" />
+          <entry key="JSON" value="48" />
+          <entry key="PLAIN_TEXT" value="71" />
+          <entry key="Python" value="65" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="json" value="59" />
-          <entry key="py" value="10746" />
+          <entry key="gitignore" value="19" />
+          <entry key="json" value="67" />
+          <entry key="py" value="15696" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JSON" value="59" />
-          <entry key="Python" value="10746" />
+          <entry key="JSON" value="67" />
+          <entry key="PLAIN_TEXT" value="19" />
+          <entry key="Python" value="15696" />
         </counts>
       </usages-collector>
     </session>
@@ -70,38 +81,24 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/spiders/tripadv.py">
+        <entry file="file://$PROJECT_DIR$/spider/spiders/hotel_url.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
+            <state relative-caret-position="18">
+              <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
               <folding>
-                <element signature="e#24#58#0" expanded="true" />
-                <marker date="1555206811842" expanded="true" signature="515:601" ph="..." />
+                <element signature="e#24#37#0" expanded="true" />
+                <marker date="1555385818717" expanded="true" signature="328:333" ph="..." />
+                <marker date="1555385818717" expanded="true" signature="847:852" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/settings.py">
+        <entry file="file://$PROJECT_DIR$/spider/spiders/city_url.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/spider/spiders/reviews_detail.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="133" column="46" selection-start-line="133" selection-start-column="46" selection-end-line="133" selection-end-column="46" />
-              <folding>
-                <element signature="e#24#37#0" expanded="true" />
-                <marker date="1555240335152" expanded="true" signature="658:667" ph="..." />
-                <marker date="1555240335152" expanded="true" signature="778:1050" ph="..." />
-                <marker date="1555240335152" expanded="true" signature="2832:2877" ph="..." />
-              </folding>
+            <state relative-caret-position="250">
+              <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
             </state>
           </provider>
         </entry>
@@ -109,43 +106,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spider/middlewares.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="149">
-              <caret line="108" column="40" lean-forward="true" selection-start-line="108" selection-start-column="40" selection-end-line="108" selection-end-column="40" />
+            <state relative-caret-position="365">
+              <caret line="122" selection-start-line="122" selection-end-line="122" />
               <folding>
                 <element signature="e#169#195#0" expanded="true" />
-                <element signature="e#277#1939#0" />
-                <element signature="e#2435#2822#0" />
-                <element signature="e#3174#3531#0" />
-                <marker date="1555230427912" expanded="true" signature="4447:4469" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/spiders/hotel_url.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="50" column="30" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
-              <folding>
-                <element signature="e#24#37#0" expanded="true" />
-                <marker date="1555153368295" expanded="true" signature="301:306" ph="..." />
-                <marker date="1555153368295" expanded="true" signature="751:756" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/items.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="63" selection-start-line="63" selection-end-line="63" />
-              <folding>
-                <marker date="1555232973869" expanded="true" signature="321:387" ph="..." />
-                <marker date="1555232973869" expanded="true" signature="450:505" ph="..." />
-                <marker date="1555232973869" expanded="true" signature="746:751" ph="..." />
-                <marker date="1555232973869" expanded="true" signature="1417:1418" ph="..." />
+                <marker date="1555257311814" expanded="true" signature="5360:5369" ph="..." />
               </folding>
             </state>
           </provider>
@@ -154,11 +119,80 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spider/pipelines.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="13" selection-start-line="13" selection-end-line="13" />
+            <state relative-caret-position="105">
+              <caret line="66" selection-start-line="66" selection-end-line="66" />
               <folding>
-                <marker date="1555153328721" expanded="true" signature="335:340" ph="..." />
-                <marker date="1555153328721" expanded="true" signature="335:962" ph="..." />
+                <element signature="e#194#205#0" expanded="true" />
+                <marker date="1555517186875" expanded="true" signature="678:995" ph="..." />
+                <marker date="1555517186875" expanded="true" signature="990:995" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spider/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="239">
+              <caret line="101" column="27" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spider/spiders/tripadv.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="326">
+              <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
+              <folding>
+                <marker date="1555518033781" expanded="true" signature="1320:1329" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="19" selection-start-column="19" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/hotel.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="126">
+              <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spider/items.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="257">
+              <caret line="81" column="19" selection-start-line="81" selection-start-column="6" selection-end-line="81" selection-end-column="19" />
+              <folding>
+                <marker date="1555515120998" expanded="true" signature="321:387" ph="..." />
+                <marker date="1555515120998" expanded="true" signature="450:505" ph="..." />
+                <marker date="1555515120998" expanded="true" signature="736:741" ph="..." />
+                <marker date="1555515120998" expanded="true" signature="1359:1360" ph="..." />
+                <marker date="1555515120998" expanded="true" signature="1637:2000" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spider/spiders/review_detail.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="882">
+              <caret line="53" column="8" selection-start-line="53" selection-end-line="54" />
+              <folding>
+                <element signature="e#24#37#0" expanded="true" />
+                <marker date="1555490991937" expanded="true" signature="639:644" ph="..." />
               </folding>
             </state>
           </provider>
@@ -176,13 +210,26 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>href</find>
-      <find>}</find>
       <find>cookie</find>
       <find>text.find_all</find>
       <find>level</find>
+      <find>}</find>
+      <find>dalian</find>
+      <find>Dalian</find>
+      <find>guiyang</find>
+      <find>xian</find>
+      <find>em</find>
+      <find>oa</find>
+      <find>yield</find>
+      <find>min</find>
+      <find>print</find>
+      <find>pic_num</find>
+      <find>age</find>
+      <find>photo</find>
     </findStrings>
     <replaceStrings>
       <replace>response.xpath</replace>
+      <replace>},</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -194,16 +241,20 @@
         <option value="$PROJECT_DIR$/spider/spiders/city_name_spider.py" />
         <option value="$PROJECT_DIR$/spider/spiders/tripadvisor_spider.py" />
         <option value="$PROJECT_DIR$/a.json" />
-        <option value="$PROJECT_DIR$/city_url.json" />
-        <option value="$PROJECT_DIR$/spider/spiders/city_url.py" />
-        <option value="$PROJECT_DIR$/spider/pipelines.py" />
-        <option value="$PROJECT_DIR$/spider/spiders/hotel_url.py" />
-        <option value="$PROJECT_DIR$/spider/spiders/tripadv.py" />
-        <option value="$PROJECT_DIR$/spider/spiders/review_detail.py" />
         <option value="$PROJECT_DIR$/spider/middlewares.py" />
-        <option value="$PROJECT_DIR$/spider/items.py" />
-        <option value="$PROJECT_DIR$/spider/settings.py" />
+        <option value="$PROJECT_DIR$/city_url.json" />
         <option value="$PROJECT_DIR$/spider/spiders/reviews_detail.py" />
+        <option value="$PROJECT_DIR$/spider/spiders/hotel_url.py" />
+        <option value="$PROJECT_DIR$/data/neighbor.json" />
+        <option value="$PROJECT_DIR$/spider/spiders/review_detail.py" />
+        <option value="$PROJECT_DIR$/data/comment.json" />
+        <option value="$PROJECT_DIR$/data/hotel.json" />
+        <option value="$PROJECT_DIR$/spider/spiders/city_url.py" />
+        <option value="$PROJECT_DIR$/spider/items.py" />
+        <option value="$PROJECT_DIR$/spider/pipelines.py" />
+        <option value="$PROJECT_DIR$/spider/settings.py" />
+        <option value="$PROJECT_DIR$/spider/spiders/tripadv.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -213,9 +264,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="900" />
+    <option name="height" value="812" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -233,18 +285,7 @@
             <path>
               <item name="spider" type="b2602c69:ProjectViewProjectNode" />
               <item name="spider" type="462c0819:PsiDirectoryNode" />
-              <item name="hotel_links" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spider" type="b2602c69:ProjectViewProjectNode" />
               <item name="spider" type="462c0819:PsiDirectoryNode" />
-              <item name="spider" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spider" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spider" type="462c0819:PsiDirectoryNode" />
-              <item name="spider" type="462c0819:PsiDirectoryNode" />
-              <item name="spiders" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -271,29 +312,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.reviews_detail">
-    <configuration name="city_url" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="spider" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/spider/spiders" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/spider/spiders/city_url.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.pipelines">
     <configuration name="hotel_url" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="spider" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -316,7 +335,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="review_detail" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="middlewares" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="spider" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -324,12 +343,34 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/spider/spiders" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/spider" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/spider/spiders/review_detail.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/spider/middlewares.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pipelines" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="spider" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/spider" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/spider/pipelines.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -384,18 +425,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.tripadv" />
-      <item itemvalue="Python.city_url" />
       <item itemvalue="Python.hotel_url" />
-      <item itemvalue="Python.review_detail" />
       <item itemvalue="Python.reviews_detail" />
+      <item itemvalue="Python.middlewares" />
+      <item itemvalue="Python.pipelines" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.reviews_detail" />
-        <item itemvalue="Python.review_detail" />
+        <item itemvalue="Python.pipelines" />
         <item itemvalue="Python.tripadv" />
         <item itemvalue="Python.hotel_url" />
-        <item itemvalue="Python.city_url" />
+        <item itemvalue="Python.middlewares" />
+        <item itemvalue="Python.reviews_detail" />
       </list>
     </recent_temporary>
   </component>
@@ -422,15 +463,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="812" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18097281" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29971388" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32891566" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49928468" weight="0.32891566" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49928468" weight="0.32777777" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -439,7 +480,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5007153" side_tool="true" weight="0.32891566" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49928468" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49928468" visible="true" weight="0.37777779" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -455,100 +496,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///anaconda3/envs/practices/bin/scrapy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="9" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/quotes-1.html" />
-    <entry file="file://$PROJECT_DIR$/spider/spiders/tripadvisor_spider.py" />
-    <entry file="file://$PROJECT_DIR$/spider/spiders/city_name_spider.py" />
-    <entry file="file://$PROJECT_DIR$/1.txt" />
-    <entry file="file:///anaconda3/envs/practices/lib/python3.7/multiprocessing/process.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="296" selection-start-line="296" selection-end-line="296" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///anaconda3/envs/practices/lib/python3.7/site-packages/redis/_compat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="108" selection-start-line="108" selection-end-line="108" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ProxyPool-master/proxypool/db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ProxyPool-master/proxypool/getter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="406">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///anaconda3/envs/practices/lib/python3.7/site-packages/scrapy/core/downloader/middleware.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="382">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/items.jl" />
-    <entry file="file://$PROJECT_DIR$/&lt;CityUrlSpider 'city_url' at 0x11163ce10&gt;.json" />
-    <entry file="file://$PROJECT_DIR$/['Harbin_Heilongjiang']_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/['Dalian_Liaoning']_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/oa1110_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/H_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/o_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/D_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/Harbin_Heilongjiang_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/oa30_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/Dalian_Liaoning_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/hotel_links/Li_County_Hunan_hotels.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hotel_links/Tanghai_County_Hebei_hotels.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hotel_links/T_hotels.txt" />
     <entry file="file://$PROJECT_DIR$/hotel_links/L_hotels.txt" />
-    <entry file="file://$PROJECT_DIR$/city_url.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="1275" column="3" selection-start-line="1275" selection-start-column="3" selection-end-line="1275" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/a.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="48" lean-forward="true" selection-start-line="11" selection-start-column="48" selection-end-line="11" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hotel_links/Beijing_hotels.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" column="22" selection-start-line="1" selection-end-line="2" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/a.json" />
     <entry file="file://$PROJECT_DIR$/hotel_links/Changdao_County_Shandong_hotels.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -556,47 +506,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spider/spiders/city_url.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="22" column="20" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="20" />
-          <folding>
-            <element signature="e#24#58#0" expanded="true" />
-            <marker date="1555153328712" expanded="true" signature="546:555" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hotel_links/Ya_an_Sichuan_hotels.txt">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Ya_an_Sichuan_hotels.txt" />
     <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.2/python_stubs/676170638/math.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
           <caret line="55" column="4" selection-start-line="55" selection-start-column="4" selection-end-line="55" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/pipelines.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="13" selection-start-line="13" selection-end-line="13" />
-          <folding>
-            <marker date="1555153328721" expanded="true" signature="335:340" ph="..." />
-            <marker date="1555153328721" expanded="true" signature="335:962" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/spiders/hotel_url.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="50" column="30" selection-start-line="50" selection-start-column="30" selection-end-line="50" selection-end-column="30" />
-          <folding>
-            <element signature="e#24#37#0" expanded="true" />
-            <marker date="1555153368295" expanded="true" signature="301:306" ph="..." />
-            <marker date="1555153368295" expanded="true" signature="751:756" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -607,72 +521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spider/spiders/review_detail.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="77" column="49" lean-forward="true" selection-start-line="77" selection-start-column="49" selection-end-line="77" selection-end-column="49" />
-          <folding>
-            <element signature="e#24#37#0" expanded="true" />
-            <marker date="1555218224609" expanded="true" signature="535:573" ph="..." />
-            <marker date="1555218224609" expanded="true" signature="974:983" ph="..." />
-            <marker date="1555218224609" expanded="true" signature="1182:1186" ph="..." />
-            <marker date="1555218224609" expanded="true" signature="1212:1221" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/spiders/tripadv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="16" column="29" lean-forward="true" selection-start-line="16" selection-start-column="29" selection-end-line="16" selection-end-column="29" />
-          <folding>
-            <element signature="e#24#58#0" expanded="true" />
-            <marker date="1555206811842" expanded="true" signature="515:601" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="15" column="2" selection-start-line="15" selection-start-column="2" selection-end-line="15" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/middlewares.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="108" column="40" lean-forward="true" selection-start-line="108" selection-start-column="40" selection-end-line="108" selection-end-column="40" />
-          <folding>
-            <element signature="e#169#195#0" expanded="true" />
-            <element signature="e#277#1939#0" />
-            <element signature="e#2435#2822#0" />
-            <element signature="e#3174#3531#0" />
-            <marker date="1555230427912" expanded="true" signature="4447:4469" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/items.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="63" selection-start-line="63" selection-end-line="63" />
-          <folding>
-            <marker date="1555232973869" expanded="true" signature="321:387" ph="..." />
-            <marker date="1555232973869" expanded="true" signature="450:505" ph="..." />
-            <marker date="1555232973869" expanded="true" signature="746:751" ph="..." />
-            <marker date="1555232973869" expanded="true" signature="1417:1418" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.2/python_stubs/676170638/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="4782" column="8" selection-start-line="4782" selection-start-column="8" selection-end-line="4782" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///anaconda3/envs/practices/lib/python3.7/re.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
@@ -680,16 +528,264 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spider/spiders/reviews_detail.py">
+    <entry file="file:///anaconda3/envs/practices/lib/python3.7/site-packages/requests/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="133" column="46" selection-start-line="133" selection-start-column="46" selection-end-line="133" selection-end-column="46" />
+        <state relative-caret-position="195">
+          <caret line="63" column="28" lean-forward="true" selection-start-line="63" selection-start-column="28" selection-end-line="63" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda3/envs/practices/lib/python3.7/random.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="752" selection-start-line="752" selection-end-line="752" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/city_links/city_url.json" />
+    <entry file="file://$PROJECT_DIR$/hotel_links/Harbin_Heilongjiang_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="37" selection-start-line="7" selection-start-column="37" selection-end-line="7" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Dalian_Liaoning_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Dongguan_Guangdong_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Guilin_Guangxi_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-14571">
+          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Guiyang_Guizhou_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-18764" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Emeishan_Sichuan_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Huangshan_Anhui_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15804">
+          <caret line="878" column="21" lean-forward="true" selection-start-line="878" selection-end-line="879" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Haikou_Hainan_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Yangzhou_Jiangsu_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5225" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Changsha_Hunan_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-14696" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Xiamen_Fujian_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11996" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/spiders/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Beihai_Guangxi_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-19469">
+          <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Changchun_Jilin_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-45">
+          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Shanghai_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-116" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Shenzhen_Guangdong_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-116" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Guangzhou_Guangdong_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-116" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Chongqing_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-116" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Xi_an_Shaanxi_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-116" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Chengdu_Sichuan_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Lijiang_Yunnan_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-21176" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Hangzhou_Zhejiang_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4064" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Beijing_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-20942">
+          <caret line="13" column="19" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/city_url.json" />
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2018.2/python_stubs/676170638/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="237" column="4" selection-start-line="237" selection-start-column="4" selection-end-line="237" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/spiders/reviews_detail.py" />
+    <entry file="file://$PROJECT_DIR$/hotel_links/Anji_County_Zhejiang_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="21" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/neighbor.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="10" column="20" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/spiders/review_detail.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="882">
+          <caret line="53" column="8" selection-start-line="53" selection-end-line="54" />
           <folding>
             <element signature="e#24#37#0" expanded="true" />
-            <marker date="1555240335152" expanded="true" signature="658:667" ph="..." />
-            <marker date="1555240335152" expanded="true" signature="778:1050" ph="..." />
-            <marker date="1555240335152" expanded="true" signature="2832:2877" ph="..." />
+            <marker date="1555490991937" expanded="true" signature="639:644" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/spiders/city_url.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/comment.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="46" selection-start-line="7" selection-start-column="46" selection-end-line="7" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/items.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="81" column="19" selection-start-line="81" selection-start-column="6" selection-end-line="81" selection-end-column="19" />
+          <folding>
+            <marker date="1555515120998" expanded="true" signature="321:387" ph="..." />
+            <marker date="1555515120998" expanded="true" signature="450:505" ph="..." />
+            <marker date="1555515120998" expanded="true" signature="736:741" ph="..." />
+            <marker date="1555515120998" expanded="true" signature="1359:1360" ph="..." />
+            <marker date="1555515120998" expanded="true" signature="1637:2000" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/middlewares.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="122" selection-start-line="122" selection-end-line="122" />
+          <folding>
+            <element signature="e#169#195#0" expanded="true" />
+            <marker date="1555257311814" expanded="true" signature="5360:5369" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scrapy.cfg">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="239">
+          <caret line="101" column="27" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/pipelines.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="66" selection-start-line="66" selection-end-line="66" />
+          <folding>
+            <element signature="e#194#205#0" expanded="true" />
+            <marker date="1555517186875" expanded="true" signature="678:995" ph="..." />
+            <marker date="1555517186875" expanded="true" signature="990:995" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/hotel.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/spiders/hotel_url.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="11" column="15" selection-start-line="11" selection-start-column="15" selection-end-line="11" selection-end-column="15" />
+          <folding>
+            <element signature="e#24#37#0" expanded="true" />
+            <marker date="1555385818717" expanded="true" signature="328:333" ph="..." />
+            <marker date="1555385818717" expanded="true" signature="847:852" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/spiders/tripadv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
+          <folding>
+            <marker date="1555518033781" expanded="true" signature="1320:1329" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
         </state>
       </provider>
     </entry>
