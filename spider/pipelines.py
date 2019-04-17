@@ -7,8 +7,9 @@
 
 import json
 import os
+import io
 
-from items import NeighborHotel, CommentItem, PersonItem, HotelItem
+from spider.items import NeighborHotel, CommentItem, PersonItem, HotelItem
 
 
 class SpiderPipeline(object):
@@ -36,14 +37,18 @@ class JsonWriterPipeline(object):
             elif isinstance(item, CommentItem):
                 file_name = 'comment.json'
             elif isinstance(item, HotelItem):
-                file_name = 'hotel,json'
+                file_name = 'hotel.json'
             elif isinstance(item, PersonItem):
                 file_name = 'person.json'
+            elif isinstance(item, PersonItem):
+                file_name = 'person.jl'
+            elif isinstance(item, CommentItem):
+                file_name = 'comment.jl'
             else:
                 return item
-            with open(os.path.join(os.path.abspath(os.path.join(os.getcwd(), "../..")), 'data/{}'.format(file_name)),
-                      'a+', encoding='utf-8')as f:
-                line = json.dumps(dict(item)) + "\n"
+            with io.open(os.path.join(os.path.abspath(os.getcwd()), 'data/{}'.format(file_name)),
+                         'a+', encoding='utf-8')as f:
+                line = json.dumps(dict(item), ensure_ascii=False) + "\n"
                 f.write(line)
 
                 return item

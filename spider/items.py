@@ -51,14 +51,12 @@ class HotelItem(scrapy.Item):
     rooms = scrapy.Field()  # 房间数
     room_type = scrapy.Field()  # 客房类型
     award = scrapy.Field()  # 奖项
-    review_addresses = scrapy.Field()  # 评论页面列表
 
 
 class CommentItem(scrapy.Item):
     hotel_id = scrapy.Field()  # 所属酒店id
     title = scrapy.Field()
     comment_id = scrapy.Field()
-    join_date = scrapy.Field()  # 入住日期
     comment_date = scrapy.Field()  # 评论时间
     person = scrapy.Field()  # 评论人id
     content = scrapy.Field()  # 评论内容
@@ -67,7 +65,17 @@ class CommentItem(scrapy.Item):
 
 
 class PersonItem(scrapy.Item):  # 评论人
-    pass
+    person_id = scrapy.Field()
+    grade = scrapy.Field()
+    gender = scrapy.Field()
+    description = scrapy.Field()
+    age = scrapy.Field()
+    member_type = scrapy.Field()
+    review_total_num = scrapy.Field()
+    visited_city_num = scrapy.Field()
+    photo_nums = scrapy.Field()
+    userfule_votes = scrapy.Field()
+    review_dis = scrapy.Field()
 
 
 class NeighborHotel(scrapy.Item):  # 附近酒店

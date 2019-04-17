@@ -1,11 +1,24 @@
 # -*- coding: utf-8 -*-
-from scrapy import Request, Spider
+from scrapy import Request, Spider, FormRequest
 import re
 import math
-from spider.items import HotelItem, NeighborHotel
-import os
+from spider.items import HotelItem, NeighborHotel, CommentItem, PersonItem
+import os, datetime
 
 pre_url = 'https://www.tripadvisor.cn'
+user_info_url = 'https://www.tripadvisor.com/MemberOverlay?Mode=owa&uid={uid}&c=&src={src}&fus=false&partner=false&LsoId=&metaReferer=ShowUserReviewsHotels'
+detail_review_url = 'https://www.tripadvisor.com/OverlayWidgetAjax'
+
+review_data = {'preferFriendReviews': 'FALSE',
+               'filterSeasons': '',
+               # 'filterLang': 'zhCN',  #
+               'reqNum': '1',
+               'filterLang': 'ALL',  #
+               'isLastPoll': 'false',
+               # 'paramSeqId': 1,
+               'changeSet': 'REVIEW_LIST',
+               # 'puid': 'W@q@6AoQI4UAALjdO38AAABN'
+               }  # puid
 
 
 # 后续处理可以设置宾馆的id，查看是否已爬取，设置断点继续
@@ -25,16 +38,18 @@ def parse_hotel_id(url):
 
 class TripadvSpider(Spider):
     name = 'hotel_detail'  # 爬虫名
-    allowed_domains = ['tripadvisor.cn']  # 允许爬取的范围
+    allowed_domains = ['tripadvisor.com', 'tripadvisor.cn']
 
-    # def __init__(self):
-    #     for root, dirs, files in os.walk('/Users/bohuanshi/PycharmProjects/spider/hotel_links'):
-    #         for file in files:
-    #             print(os.path.join(root, file))
+    def __init__(self):
+        # for root, dirs, files in os.walk('/Users/bohuanshi/PycharmProjects/spider/hotel_links'):
+        #     for file in files:
+        #         print(os.path.join(root, file))
+        for filename in os.listdir(os.path.join(os.path.abspath(os.getcwd()), "hotel_links")):
+            print(filename)
 
     def start_requests(self):
         hotel_detail_url = "/Hotel_Review-g294212-d1916310-Reviews-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html"
-        yield Request(pre_url + hotel_detail_url, callback=self.parse_detail_hotel)
+        yield Request(pre_url + hotel_detail_url, callback=self.parse_detail_hotel, meta={'max': 3})
 
     def parse_neighbor_initial(self, response):
         xpath_neibor_nums = '//*[@id="taplc_main_pagination_bar_dusty_hotels_resp_0"]/div/div/div/div/a/text()'  # 页数列表，最后一项为页数
@@ -54,9 +69,10 @@ class TripadvSpider(Spider):
             yield neighbor
 
         url_start = re.search('.+\d+', response.request.url, re.M | re.I)
-        for i in range(int(neighbor_nums)):
+        page_num = min(int(neighbor_nums),80)
+        for i in range(page_num):
             page_url = re.sub('.+\d+', url_start.group() + '-oa' + str(i * 30), response.request.url)
-            yield Request(page_url, callback=self.parse_neighbor)
+            yield Request(page_url, callback=self.parse_neighbor, meta={'max': 3})
 
     def parse_neighbor(self, response):
         links = response.xpath('//*[@class="listing_title"]/a/@href').extract()
@@ -106,7 +122,6 @@ class TripadvSpider(Spider):
             text = re.search('\d+', textObj)
             review_count = int(text.group())
         hotel['comment_num'] = review_count
-        print(review_count)
 
         # 找出评论页面
         url_start = re.search('.+Reviews', response.request.url)
@@ -115,9 +130,7 @@ class TripadvSpider(Spider):
         for n in range(1, math.ceil(review_count / 5)):
             review_page_url = re.sub('.+Reviews', url_start.group() + '-or' + str(n * 5), response.request.url)
             review_page_urls.append(review_page_url)
-        hotel['review_addresses'] = review_page_urls
-
-        print(review_page_urls)
+            yield Request(review_page_url, callback=self.parse_review, meta={'max': 3})
 
         # 排名
         try:
@@ -248,4 +261,180 @@ class TripadvSpider(Spider):
         neighbor_url = "{}{}".format(pre_url, neighbor)
 
         # 字符串
-        yield Request(neighbor_url, callback=self.parse_neighbor_initial)
+        yield Request(neighbor_url, callback=self.parse_neighbor_initial, meta={'max': 3})
+
+    def parse_review(self, response):
+        review = response.xpath('//*[@class="quote"]')
+        hotel_id = parse_hotel_id(response.request.url)
+
+        # 申请评论详情页
+
+        # 对每一页的review解析出对应的review详情页面
+        for quote in review:
+            print(quote)
+            reviewObj = re.search('/ShowUserReviews.+html', str(quote.extract()), re.M | re.I)
+            id = re.search('(?<=r)\d+', reviewObj.group()).group()
+            params = {'Mode': 'EXPANDED_HOTEL_REVIEWS',
+                      'metaReferer': 'Restaurant_Review',
+                      'reviews': id}
+
+            yield FormRequest(detail_review_url, formdata=params, callback=self.parse_review_detail, method='GET',
+                              meta={'id': id, 'max': 3, 'hotel_id': hotel_id})
+
+    def parse_review_detail(self, response):
+        comment = CommentItem()
+
+        # 评论id
+        comment['comment_id'] = response.meta['id']
+        noquotes = response.xpath('//*/span[@class="noQuotes"]').extract()
+        title = re.search('(?<=>)[\s\S]*(?=<)', str(noquotes[0]))
+        reviewTitle = title.group()
+        comment['title'] = reviewTitle
+
+        # 对用酒店id
+        comment['hotel_id'] = response.meta['hotel_id']
+
+        # 评论内容
+        p = response.xpath('//*/p[@class="partial_entry"]').extract()
+        body = re.search('(?<=>).*(?=<)', str(p[0]))
+        reviewText = re.sub('<br>|<br/>', '', body.group())
+        comment['content'] = reviewText
+
+        # 评论日期
+        ratingDate = response.xpath('//*/span[@class="ratingDate relativeDate"]').extract()
+        review_date = re.search('(?<=title=").*(?=">)', str(ratingDate[0]))
+        time_format = datetime.datetime.strptime(review_date.group(), '%B %d, %Y')
+        reviewDate = time_format.strftime('%Y/%m/%d')
+        comment['comment_date'] = reviewDate
+
+        ratingObj = re.search('(?<=span class="ui_bubble_rating bubble_)\d(?=0)', str(response.text))
+        reviewRating = ratingObj.group()
+        comment['rating'] = reviewRating
+
+        uid_src = response.xpath("//*[@class='member_info']").extract()
+        uidObj = re.search('(?<=UID_).*?(?=-SRC_)', str(uid_src[0]))
+        uid = uidObj.group()
+
+        srcObj = re.search('(?<=SRC_)\d+', str(uid_src[0]))
+        src = srcObj.group()
+
+        # 评论人id
+        comment['person'] = uid
+        yield comment
+
+        yield Request(url=user_info_url.format(uid=uid, src=src), callback=self.parse_user, meta={'max': 3})
+
+    def parse_user(self, response):
+        person = PersonItem()
+        print(response.request.url)
+        contributor_text = response.text
+        contributor_urlObj = re.search('/Profile.*(?=")', str(contributor_text))
+        reviewerURL = 'https://www.tripadvisor.com' + contributor_urlObj.group()
+        print("评论者链接是：", end='')
+        print(reviewerURL)
+
+        # 等级
+        try:
+            badgeinfo = response.xpath('//*[@class="badgeinfo"]')
+            contributor_LevelObj = re.search('\d', str(badgeinfo[0]))
+            contributorLevel = contributor_LevelObj.group()
+        except:
+            contributorLevel = None
+
+        person['grade'] = contributorLevel
+        print("评论者等级：", end='')
+
+        print(contributorLevel)
+
+        # 描述
+        memberdescription = response.xpath('//*/ul[@class="memberdescriptionReviewEnhancements"]').extract_first()
+        print(memberdescription)
+        person['description'] = memberdescription
+
+        # 性别
+        genderObj = re.search('man(?= from)|Man(?= from)|woman(?= from)|Woman(?= from)',
+                              memberdescription)
+        try:
+            reviewerGender = genderObj.group().lower()
+        except:
+            reviewerGender = None
+        person['gender'] = reviewerGender
+        print("评论者性别：", end='')
+        print(reviewerGender)
+
+        # 年龄
+        ageObj = re.search('\d+-\d+|\d+\+', memberdescription)
+        try:
+            reviewerAge = ageObj.group()
+        except:
+            reviewerAge = None
+
+        person['age'] = reviewerAge
+        print("评论者年龄：", end='')
+        print(reviewerAge)
+
+        # 类型
+        try:
+            memberTagReview = response.xpath('//*/a[@class="memberTagReviewEnhancements"]')
+            travelerType = memberTagReview.text
+        except:
+            travelerType = None
+
+        person['member_type'] = travelerType
+        print("评论者类型：", end='')
+        print(travelerType)
+
+        # 勋章
+        badgeTextReviewEnhancements = response.xpath('//*/span[@class="badgeTextReviewEnhancements"]').extract()
+        reviewerContributionNum = reviewerCityNum = reviewerPhotoNum = reviewerHelpfulVotes = None
+        for badgetext in badgeTextReviewEnhancements:
+            bandgetypeObj = re.search('(?<=\d\s).*(?=</span>)', badgetext)
+            bandgetype = bandgetypeObj.group()
+            if bandgetype == 'Contributions' or bandgetype == 'Contribution':
+                contributionsObj = re.search('\d+', str(badgetext))
+                reviewerContributionNum = contributionsObj.group()
+            elif bandgetype == 'Cities visited' or bandgetype == 'City visited':
+                contributor_cities_visitedObj = re.search('\d+', str(badgetext))
+                reviewerCityNum = contributor_cities_visitedObj.group()
+            elif bandgetype == 'Helpful votes' or bandgetype == 'Helpful vote':
+                contributor_helpful_votesObj = re.search('\d+', str(badgetext))
+                reviewerHelpfulVotes = contributor_helpful_votesObj.group()
+            elif bandgetype == 'Photos' or bandgetype == 'Photo':
+                contributor_photosObj = re.search('\d+', str(badgetext))
+                reviewerPhotoNum = contributor_photosObj.group()
+        print('评论者评论总数，访问城市数目，发表照片数目，获得有用投票总数：', end='')
+        print(reviewerContributionNum, reviewerCityNum, reviewerHelpfulVotes, reviewerPhotoNum)
+
+        person['review_total_num'] = reviewerContributionNum
+        person['visited_city_num'] = reviewerCityNum
+        person['photo_nums'] = reviewerCityNum
+        person['userfule_votes'] = reviewerHelpfulVotes
+
+        # 评论
+        chartRowReviewEnhancements = response.xpath('//*[@class="chartRowReviewEnhancements"]').extract()
+        reviewerExcellentRating = reviewerVeryGoodRating = reviewerAverageRating = reviewerPoorRating = reviewerTerribleRating = None
+        for chartRow in chartRowReviewEnhancements:
+            chartRowObj = re.search('(?<=>).*(?=</span>)', chartRow)
+            chartRowtype = chartRowObj.group()
+            if chartRowtype == 'Excellent':
+                contributor_review_excellentObj = re.search('\d+(?=</span>)', str(chartRow))
+                reviewerExcellentRating = contributor_review_excellentObj.group()
+            elif chartRowtype == 'Very good':
+                contributor_review_goodObj = re.search('\d+(?=</span>)', str(chartRow))
+                reviewerVeryGoodRating = contributor_review_goodObj.group()
+            elif chartRowtype == 'Average':
+                contributor_review_averageObj = re.search('\d+(?=</span>)', str(chartRow))
+                reviewerAverageRating = contributor_review_averageObj.group()
+            elif chartRowtype == 'Poor':
+                contributor_review_poorObj = re.search('\d+(?=</span>)', str(chartRow))
+                reviewerPoorRating = contributor_review_poorObj.group()
+            elif chartRowtype == 'Terrible':
+                contributor_review_terribleObj = re.search('\d+(?=</span>)', str(chartRow))
+                reviewerTerribleRating = contributor_review_terribleObj.group()
+        print("各星评论数目：", end='')
+        print(reviewerExcellentRating, reviewerVeryGoodRating, reviewerAverageRating,
+              reviewerPoorRating,
+              reviewerTerribleRating)
+        person['review_dis'] = "{},{},{},{},{}".format(reviewerExcellentRating, reviewerVeryGoodRating,
+                                                       reviewerAverageRating, reviewerPoorRating,
+                                                       reviewerTerribleRating)

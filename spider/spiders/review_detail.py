@@ -9,8 +9,16 @@ user_info_url = 'https://www.tripadvisor.com/MemberOverlay?Mode=owa&uid={uid}&c=
 detail_review_url = 'https://www.tripadvisor.com/OverlayWidgetAjax'
 
 
-class ReviewDetailSpider(scrapy.Spider):
+def parse_hotel_id(url):
+    result = []
+    if type(url) is list:
+        for i in range(len(url)):
+            result.append(re.findall('d\d+(?=-)', url[i])[0])
+        return result
+    return re.findall('d\d+(?=-)', url)[0]
 
+
+class ReviewDetailSpider(scrapy.Spider):
     name = 'review_detail'
     allowed_domains = ['tripadvisor.com', 'tripadvisor.cn']
     start_urls = [
@@ -43,6 +51,8 @@ puid: XLKm58CoATAAAD6kMG8AAAHX
     def parse(self, response):
         print(response.request.url)
         review = response.xpath('//*[@class="quote"]')
+        hotel_id = parse_hotel_id(response.request.url)
+        print("hotel_id\t", hotel_id)
         maxTimes = response.meta['max']
         while review == [] and maxTimes != 0:
             yield scrapy.FormRequest(response.request.url, method='POST', formdata=self.data, callback=self.parse,
@@ -52,6 +62,7 @@ puid: XLKm58CoATAAAD6kMG8AAAHX
         # 对每一页的review解析出对应的review详情页面
         for quote in review:
             print(quote)
+
             reviewObj = re.search('/ShowUserReviews.+html', str(quote.extract()), re.M | re.I)
             id = re.search('(?<=r)\d+', reviewObj.group()).group()
             params = {'Mode': 'EXPANDED_HOTEL_REVIEWS',
@@ -62,7 +73,10 @@ puid: XLKm58CoATAAAD6kMG8AAAHX
                               meta={'id': id})
 
     def parse_review_detail(self, response):
+        print(response.request.url)
+
         comment = CommentItem()
+
         comment['comment_id'] = response.meta['id']
         noquotes = response.xpath('//*/span[@class="noQuotes"]').extract()
         title = re.search('(?<=>)[\s\S]*(?=<)', str(noquotes[0]))
