@@ -8,10 +8,10 @@
 from scrapy import signals
 from scrapy.exceptions import IgnoreRequest
 from fake_useragent import UserAgent
-import requests
+import random
+import os
 
-order_id = '866020541912409297'
-current_proxy = '123.206.99.143:56424'
+current_proxy = 'http://cba447ab2430:h7y1u9j1tr@123.206.99.143:56424'
 
 
 class SpiderSpiderMiddleware(object):
@@ -110,11 +110,16 @@ class SpiderDownloaderMiddleware(object):
 
 
 class RandomUserAgent(object):
+    def __init__(self):
+        self.proxy_files = os.path.join(os.path.abspath(os.getcwd()), 'proxies.txt')
+
+    def get_proxies(self):
+        with open(self.proxy_files, 'r+', encoding='utf-8')as f:
+            return f.readlines()
 
     def process_request(self, request, spider):
         ua = UserAgent(verify_ssl=False)
-        print('开始请求{}'.format(request.url))
-        current_final_proxy = 'http://{}@{}'.format("cba447ab2430:h7y1u9j1tr", current_proxy)
+        current_final_proxy = self.get_proxies()
         print(current_final_proxy)
         request.meta['proxy'] = current_final_proxy
         request.headers['User-Agent'] = ua.random
@@ -128,10 +133,7 @@ class RandomUserAgent(object):
             if int(request.meta['max']) > 0:
                 print('状态码非200')
                 # 请求新的地址
-                current_proxy = requests.get(
-                    'https://proxy.mimvp.com/api/fetchsecret.php?orderid={}&num=1&http_type=3&result_fields=1'.format(
-                        order_id)).text
-                current_final_proxy = 'http://{}@{}'.format("cba447ab2430:h7y1u9j1tr", current_proxy)
+                current_final_proxy = self.get_proxies()
                 # print("this is response ip:" + proxy)
                 # 对当前reque加上代理
                 request.meta['proxy'] = current_final_proxy
@@ -147,10 +149,7 @@ class RandomUserAgent(object):
         # 出现异常时（超时）使用代理
         print("\n出现异常，正在使用代理重试....\n")
         if request.meta['max'] > 0:
-            current_proxy = requests.get(
-                'https://proxy.mimvp.com/api/fetchsecret.php?orderid={}&num=1&http_type=3&result_fields=1'.format(
-                    order_id)).text
-            current_final_proxy = 'http://{}@{}'.format("cba447ab2430:h7y1u9j1tr", current_proxy)
+            current_final_proxy = proxies[random.randint]
             # 对当前reque加上代理
             request.meta['proxy'] = current_final_proxy
             print("更换代理为{}".format(current_final_proxy))
@@ -158,18 +157,3 @@ class RandomUserAgent(object):
             return request
         else:
             raise IgnoreRequest("超过最大请求，{}\t被跳过".format(request.url))
-
-
-if __name__ == '__main__':
-    # proxs = spider_proxy()
-    # print(proxs)
-    ua = UserAgent(verify_ssl=False)
-
-    proxies = {
-        'https': 'http://cba447ab2430:h7y1u9j1tr@123.206.99.143:56424'
-    }
-    headers = {'user-agent': ua.random}
-    res = requests.get('https://www.tripadvisor.cn/Hotels-g294212-oa120-Beijing-Hotels.html', headers=headers,
-                       proxies=proxies, timeout=30)
-    print(res.status_code)
-    print(res.content)

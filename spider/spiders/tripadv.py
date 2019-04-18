@@ -39,15 +39,20 @@ def parse_hotel_id(url):
 class TripadvSpider(Spider):
     name = 'hotel_detail'  # 爬虫名
     allowed_domains = ['tripadvisor.com', 'tripadvisor.cn']
+    file_names = []
 
     def __init__(self):
         abs_cwd = os.path.join(os.path.abspath(os.getcwd()), 'hotel_links')
         for filename in os.listdir(abs_cwd):
-            print(os.path.join(abs_cwd,filename))
+            self.file_names.append(os.path.join(abs_cwd, filename))
 
     def start_requests(self):
-        hotel_detail_url = "/Hotel_Review-g294212-d1916310-Reviews-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html"
-        yield Request(pre_url + hotel_detail_url, callback=self.parse_detail_hotel, meta={'max': 3})
+        for filename in self.file_names:
+            with open(filename, 'r+', encoding='utf-8')as f:
+                lines = f.readlines()
+                for line in lines:
+                    hotel_detail_url = line
+                    yield Request(pre_url + hotel_detail_url, callback=self.parse_detail_hotel, meta={'max': 3})
 
     def parse_neighbor_initial(self, response):
         xpath_neibor_nums = '//*[@id="taplc_main_pagination_bar_dusty_hotels_resp_0"]/div/div/div/div/a/text()'  # 页数列表，最后一项为页数
@@ -228,7 +233,8 @@ class TripadvSpider(Spider):
             rooms = response.xpath(xpath_rooms).extract()
             # 带说明
             rooms_instr = response.xpath('//*[@id="ABOUT_TAB"]/div[2]/div[4]/div[2]/div[3]/div[2]/div/text()').extract()
-            rooms = ",".join(rooms + rooms_instr)
+            rooms = "".join(rooms + rooms_instr)
+            int(rooms)
         except:
             rooms = 'N/A'
         hotel['rooms'] = rooms

@@ -21,13 +21,6 @@ class SpiderPipeline(object):
 class JsonWriterPipeline(object):
     def __init__(self):
         setting = get_project_settings()
-        '''
-        MYSQL_HOST = 
-MYSQL_DBNAME 
-MYSQL_USER = 
-MYSQL_PASSWD 
-MYSQL_PORT = 
-        '''
 
         self.conn = pq.connect(host=setting.get('MYSQL_HOST'), user=setting.get('MYSQL_USER'),
                                port=setting.get('MYSQL_PORT'),
@@ -85,6 +78,3 @@ MYSQL_PORT =
         self.cur.close()
         self.conn.close()
 
-
-if __name__ == '__main__':
-    setting = get_project_settings()
