@@ -133,7 +133,7 @@ class RandomUserAgent(object):
             if int(request.meta['max']) > 0:
                 print('状态码非200')
                 # 请求新的地址
-                current_final_proxy = self.get_proxies()
+                current_final_proxy = self.get_proxies()[random.randint(0,len(self.get_proxies())-1)]
                 # print("this is response ip:" + proxy)
                 # 对当前reque加上代理
                 request.meta['proxy'] = current_final_proxy
@@ -149,7 +149,7 @@ class RandomUserAgent(object):
         # 出现异常时（超时）使用代理
         print("\n出现异常，正在使用代理重试....\n")
         if request.meta['max'] > 0:
-            current_final_proxy = proxies[random.randint]
+            current_final_proxy = self.get_proxies()[random.randint(0, len(self.get_proxies()) - 1)]
             # 对当前reque加上代理
             request.meta['proxy'] = current_final_proxy
             print("更换代理为{}".format(current_final_proxy))
