@@ -10,10 +10,9 @@ from scrapy.exceptions import IgnoreRequest
 from fake_useragent import UserAgent
 import random
 import os
-import requests
 import pymysql
 
-current_proxy = 'http://a6d4348e218e:qwmcu5rqmi@222.218.222.70:8901'
+current_proxy = 'http://a6d4348e218e:qwmcu5rqmi@203.195.252.36:21686'
 
 
 class SpiderSpiderMiddleware(object):
@@ -115,7 +114,6 @@ class RandomUserAgent(object):
     def __init__(self):
         self.proxy_files = os.path.join(os.path.abspath(os.getcwd()), 'proxies.txt')
 
-    @staticmethod
     def get_proxies(self):
         with open(self.proxy_files, 'r+', encoding='utf-8')as f:
             return f.readlines()
@@ -123,6 +121,7 @@ class RandomUserAgent(object):
     def process_request(self, request, spider):
         ua = UserAgent(verify_ssl=False)
         print("正在处理:{}".format(request.url))
+        print("使用代理{}".format(current_proxy))
         request.meta['proxy'] = current_proxy
         request.headers['User-Agent'] = ua.random
         if spider.name == 'review_detail':
@@ -132,7 +131,7 @@ class RandomUserAgent(object):
         '''对返回的response处理'''
         # 如果返回的response状态不是200，重新生成当前request对象
         if response.status != 200:
-            lines = self.get_proxies(self)
+            lines = self.get_proxies()
             if int(request.meta['max']) > 0:
                 print('状态码非200')
                 # 请求新的地址
@@ -151,10 +150,10 @@ class RandomUserAgent(object):
     def process_exception(self, request, exception, spider):
         # 出现异常时（超时）使用代理
         print("\n出现异常，正在使用代理重试....\n")
-        if isinstance(exception,pymysql.DatabaseError):
+        if isinstance(exception, pymysql.DatabaseError):
             raise IgnoreRequest("数据库错误，不做处理")
         if request.meta['max'] > 0:
-            lines = self.get_proxies(self)
+            lines = self.get_proxies()
             current_proxy = lines[random.randint(0, len(lines) - 1)].strip()
             # 对当前reque加上代理
             request.meta['proxy'] = current_proxy
@@ -165,15 +164,3 @@ class RandomUserAgent(object):
             raise IgnoreRequest("超过最大请求，{}\t被跳过".format(request.url))
 
 
-if __name__ == '__main__':
-    proxies = {
-        "http": "http://a6d4348e218e:qwmcu5rqmi@222.218.222.70:8901"
-    }
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36'
-
-    }
-
-    res = requests.get(
-        'https://www.tripadvisor.cn/Hotel_Review-g298556-d5864993-Reviews-Grand_Bravo_Guilin-Guilin_Guangxi.html',proxies = proxies)
-    print(res.text)

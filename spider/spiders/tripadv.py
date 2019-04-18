@@ -11,9 +11,8 @@ detail_review_url = 'https://www.tripadvisor.com/OverlayWidgetAjax'
 
 review_data = {'preferFriendReviews': 'FALSE',
                'filterSeasons': '',
-               # 'filterLang': 'zhCN',  #
+               'filterLang': 'zhCN',  #
                'reqNum': '1',
-               'filterLang': 'ALL',  #
                'isLastPoll': 'false',
                # 'paramSeqId': 1,
                'changeSet': 'REVIEW_LIST',
@@ -52,7 +51,8 @@ class TripadvSpider(Spider):
                 lines = f.readlines()
                 for line in lines:
                     hotel_detail_url = line
-                    yield Request((pre_url + hotel_detail_url).rstrip('%0A').strip(), callback=self.parse_detail_hotel, meta={'max': 3})
+                    yield Request((pre_url + hotel_detail_url).rstrip('%0A').strip(), callback=self.parse_detail_hotel,
+                                  meta={'max': 3})
 
     def parse_neighbor_initial(self, response):
         xpath_neibor_nums = '//*[@id="taplc_main_pagination_bar_dusty_hotels_resp_0"]/div/div/div/div/a/text()'  # 页数列表，最后一项为页数
@@ -72,7 +72,7 @@ class TripadvSpider(Spider):
             yield neighbor
 
         url_start = re.search('.+\d+', response.request.url, re.M | re.I)
-        page_num = min(int(neighbor_nums), 80)
+        page_num = min(int(neighbor_nums), 5)
         for i in range(page_num):
             page_url = re.sub('.+\d+', url_start.group() + '-oa' + str(i * 30), response.request.url)
             yield Request(page_url, callback=self.parse_neighbor, meta={'max': 3})
@@ -130,7 +130,8 @@ class TripadvSpider(Spider):
         url_start = re.search('.+Reviews', response.request.url)
         review_page_urls = []
         review_page_urls.append(response.request.url)
-        for n in range(1, math.ceil(int(review_count) / 5)):
+        page_nums = min((math.ceil(math.ceil(int(review_count) / 5)), 100))
+        for n in range(1, page_nums):
             review_page_url = re.sub('.+Reviews', url_start.group() + '-or' + str(n * 5), response.request.url)
             review_page_urls.append(review_page_url)
             yield Request(review_page_url, callback=self.parse_review, meta={'max': 3})
@@ -302,7 +303,7 @@ class TripadvSpider(Spider):
             p = response.xpath('//*/p[@class="partial_entry"]').extract()
             body = re.search('(?<=>).*(?=<)', str(p[0]))
             reviewText = re.sub('<br>|<br/>', '', body.group())
-            comment['content'] = reviewText
+            comment['content'] = reviewText if len(reviewText)<1024 else reviewText[0:1024]
 
             # 评论日期
             ratingDate = response.xpath('//*/span[@class="ratingDate relativeDate"]').extract()
@@ -334,9 +335,9 @@ class TripadvSpider(Spider):
     def parse_user(self, response):
         person = PersonItem()
         # print(response.request.url)
-        contributor_text = response.text
-        contributor_urlObj = re.search('/Profile.*(?=")', str(contributor_text))
-        reviewerURL = 'https://www.tripadvisor.com' + contributor_urlObj.group()
+        # contributor_text = response.text
+        # contributor_urlObj = re.search('/Profile.*(?=")', str(contributor_text))
+        # reviewerURL = 'https://www.tripadvisor.com' + contributor_urlObj.group()
         # print("评论者链接是：", end='')
         # print(reviewerURL)
 
@@ -413,14 +414,13 @@ class TripadvSpider(Spider):
                 reviewerHelpfulVotes = contributor_helpful_votesObj.group()
             elif bandgetype == 'Photos' or bandgetype == 'Photo':
                 contributor_photosObj = re.search('\d+', str(badgetext))
-                reviewerPhotoNum = contributor_photosObj.group()
         # print('评论者评论总数，访问城市数目，发表照片数目，获得有用投票总数：', end='')
         # print(reviewerContributionNum, reviewerCityNum, reviewerHelpfulVotes, reviewerPhotoNum)
 
-        person['review_total_num'] = reviewerContributionNum
-        person['visited_city_num'] = reviewerCityNum
-        person['photo_nums'] = reviewerCityNum
-        person['userfule_votes'] = reviewerHelpfulVotes
+        person['review_total_num'] = 'N/A' if reviewerContributionNum is None else str(reviewerContributionNum)
+        person['visited_city_num'] = 'N/A' if reviewerCityNum is None else str(reviewerCityNum)
+        person['photo_nums'] = 'N/A' if reviewerCityNum is None else str(reviewerCityNum)
+        person['userfule_votes'] = 'N/A' if reviewerHelpfulVotes is None else str(reviewerHelpfulVotes)
 
         # 评论
         chartRowReviewEnhancements = response.xpath('//*[@class="chartRowReviewEnhancements"]').extract()
