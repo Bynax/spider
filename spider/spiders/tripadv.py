@@ -41,11 +41,9 @@ class TripadvSpider(Spider):
     allowed_domains = ['tripadvisor.com', 'tripadvisor.cn']
 
     def __init__(self):
-        # for root, dirs, files in os.walk('/Users/bohuanshi/PycharmProjects/spider/hotel_links'):
-        #     for file in files:
-        #         print(os.path.join(root, file))
-        for filename in os.listdir(os.path.join(os.path.abspath(os.getcwd()), "hotel_links")):
-            print(filename)
+        abs_cwd = os.path.join(os.path.abspath(os.getcwd()), 'hotel_links')
+        for filename in os.listdir(abs_cwd):
+            print(os.path.join(abs_cwd,filename))
 
     def start_requests(self):
         hotel_detail_url = "/Hotel_Review-g294212-d1916310-Reviews-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html"
@@ -108,7 +106,7 @@ class TripadvSpider(Spider):
         # 照片数量
         pics_num = response.xpath(xpath_pics_num).extract()
         if pics_num is None:
-            pic_num = 0
+            pic_num = 'N/A'
         else:
             pic_num = ''.join(pics_num)
         hotel['pics_num'] = pic_num
@@ -116,7 +114,7 @@ class TripadvSpider(Spider):
         # 点评数量
         review = response.xpath(xpath_review_count)
         if review is None:
-            review_count = 0
+            review_count = 'N/A'
         else:
             textObj = re.sub(',', '', review.extract_first())
             text = re.search('\d+', textObj)
@@ -127,7 +125,7 @@ class TripadvSpider(Spider):
         url_start = re.search('.+Reviews', response.request.url)
         review_page_urls = []
         review_page_urls.append(response.request.url)
-        for n in range(1, math.ceil(review_count / 5)):
+        for n in range(1, math.ceil(int(review_count) / 5)):
             review_page_url = re.sub('.+Reviews', url_start.group() + '-or' + str(n * 5), response.request.url)
             review_page_urls.append(review_page_url)
             yield Request(review_page_url, callback=self.parse_review, meta={'max': 3})
@@ -147,8 +145,8 @@ class TripadvSpider(Spider):
             cn_name = hotel_name.xpath('.//text()').extract_first()
             en_name = hotel_name.xpath('.//div/text()').extract_first()
         except:
-            cn_name = None
-            en_name = None
+            cn_name = 'N/A'
+            en_name = 'N/A'
 
         hotel['hotel_name_cn'] = cn_name
         hotel['hotel_name_en'] = en_name
@@ -161,7 +159,7 @@ class TripadvSpider(Spider):
         try:
             hotel_address = response.xpath(xpath_address).extract_first()
         except:
-            hotel_address = None
+            hotel_address = 'N/A'
         hotel['address'] = hotel_address
 
         # 奖项与认证
@@ -184,7 +182,7 @@ class TripadvSpider(Spider):
             styleObj = response.xpath('//*[@class="textitem style"]/text()').extract()
             hotelStyle = ",".join(styleObj)
         except:
-            hotelStyle = None
+            hotelStyle = 'N/A'
 
         hotel['style'] = hotelStyle
 
@@ -198,7 +196,7 @@ class TripadvSpider(Spider):
             hotel_feature = ",".join(feature + feature_with_instr)
 
         except:
-            hotel_feature = None
+            hotel_feature = 'N/A'
         hotel['feature'] = hotel_feature
 
         # 客房类型
@@ -213,7 +211,7 @@ class TripadvSpider(Spider):
             room_type = ",".join(r_type + r_type_instr)
 
         except:
-            room_type = None
+            room_type = 'N/A'
 
         hotel['room_type'] = room_type
 
@@ -221,7 +219,7 @@ class TripadvSpider(Spider):
         try:
             star = "".join(re.findall('\d+', response.xpath(xpath_star).extract_first()))
         except:
-            star = None
+            star = 'N/A'
         hotel['star'] = star
 
         # 房间数量
@@ -232,7 +230,7 @@ class TripadvSpider(Spider):
             rooms_instr = response.xpath('//*[@id="ABOUT_TAB"]/div[2]/div[4]/div[2]/div[3]/div[2]/div/text()').extract()
             rooms = ",".join(rooms + rooms_instr)
         except:
-            rooms = -1
+            rooms = 'N/A'
         hotel['rooms'] = rooms
 
         # 优惠价钱
@@ -250,9 +248,9 @@ class TripadvSpider(Spider):
                 for i in range(min(len(name), len(price))):
                     prices.append("{}:{}".format(name[i], price[i]))
         except:
-            prices = None
+            prices = 'N/A'
 
-        hotel['youhui'] = prices
+        hotel['youhui'] = ",".join(prices)
         hotel['hotel_city'] = parse_city_id(response.request.url)
         hotel['hotel_id'] = parse_hotel_id(response.request.url)
         yield hotel
@@ -281,47 +279,51 @@ class TripadvSpider(Spider):
                               meta={'id': id, 'max': 3, 'hotel_id': hotel_id})
 
     def parse_review_detail(self, response):
-        comment = CommentItem()
+        try:
+            comment = CommentItem()
 
-        # 评论id
-        comment['comment_id'] = response.meta['id']
-        noquotes = response.xpath('//*/span[@class="noQuotes"]').extract()
-        title = re.search('(?<=>)[\s\S]*(?=<)', str(noquotes[0]))
-        reviewTitle = title.group()
-        comment['title'] = reviewTitle
+            # 评论id
+            comment['comment_id'] = response.meta['id']
+            noquotes = response.xpath('//*/span[@class="noQuotes"]').extract()
+            title = re.search('(?<=>)[\s\S]*(?=<)', str(noquotes[0]))
+            reviewTitle = title.group()
+            comment['title'] = reviewTitle
 
-        # 对用酒店id
-        comment['hotel_id'] = response.meta['hotel_id']
+            # 对用酒店id
+            comment['hotel_id'] = response.meta['hotel_id']
 
-        # 评论内容
-        p = response.xpath('//*/p[@class="partial_entry"]').extract()
-        body = re.search('(?<=>).*(?=<)', str(p[0]))
-        reviewText = re.sub('<br>|<br/>', '', body.group())
-        comment['content'] = reviewText
+            # 评论内容
+            p = response.xpath('//*/p[@class="partial_entry"]').extract()
+            body = re.search('(?<=>).*(?=<)', str(p[0]))
+            reviewText = re.sub('<br>|<br/>', '', body.group())
+            comment['content'] = reviewText
 
-        # 评论日期
-        ratingDate = response.xpath('//*/span[@class="ratingDate relativeDate"]').extract()
-        review_date = re.search('(?<=title=").*(?=">)', str(ratingDate[0]))
-        time_format = datetime.datetime.strptime(review_date.group(), '%B %d, %Y')
-        reviewDate = time_format.strftime('%Y/%m/%d')
-        comment['comment_date'] = reviewDate
+            # 评论日期
+            ratingDate = response.xpath('//*/span[@class="ratingDate relativeDate"]').extract()
+            review_date = re.search('(?<=title=").*(?=">)', str(ratingDate[0]))
+            time_format = datetime.datetime.strptime(review_date.group(), '%B %d, %Y')
+            reviewDate = time_format.strftime('%Y/%m/%d')
+            comment['comment_date'] = reviewDate
 
-        ratingObj = re.search('(?<=span class="ui_bubble_rating bubble_)\d(?=0)', str(response.text))
-        reviewRating = ratingObj.group()
-        comment['rating'] = reviewRating
+            ratingObj = re.search('(?<=span class="ui_bubble_rating bubble_)\d(?=0)', str(response.text))
+            reviewRating = ratingObj.group()
+            comment['rating'] = reviewRating
 
-        uid_src = response.xpath("//*[@class='member_info']").extract()
-        uidObj = re.search('(?<=UID_).*?(?=-SRC_)', str(uid_src[0]))
-        uid = uidObj.group()
+            uid_src = response.xpath("//*[@class='member_info']").extract()
+            uidObj = re.search('(?<=UID_).*?(?=-SRC_)', str(uid_src[0]))
+            uid = uidObj.group()
 
-        srcObj = re.search('(?<=SRC_)\d+', str(uid_src[0]))
-        src = srcObj.group()
+            srcObj = re.search('(?<=SRC_)\d+', str(uid_src[0]))
+            src = srcObj.group()
 
-        # 评论人id
-        comment['person'] = uid
-        yield comment
-
-        yield Request(url=user_info_url.format(uid=uid, src=src), callback=self.parse_user, meta={'max': 3})
+            # 评论人id
+            comment['person'] = uid
+            yield comment
+            if uid is not None:
+                yield Request(url=user_info_url.format(uid=uid, src=src), callback=self.parse_user,
+                              meta={'max': 3, 'uid': uid})
+        except:
+            pass
 
     def parse_user(self, response):
         person = PersonItem()
@@ -332,41 +334,46 @@ class TripadvSpider(Spider):
         print("评论者链接是：", end='')
         print(reviewerURL)
 
+        person['person_id'] = response.meta['uid']
+
         # 等级
         try:
             badgeinfo = response.xpath('//*[@class="badgeinfo"]')
             contributor_LevelObj = re.search('\d', str(badgeinfo[0]))
             contributorLevel = contributor_LevelObj.group()
         except:
-            contributorLevel = None
+            contributorLevel = 'N/A'
 
         person['grade'] = contributorLevel
         print("评论者等级：", end='')
 
         print(contributorLevel)
 
+        memberdescription = response.xpath('//*/ul[@class="memberdescriptionReviewEnhancements"]')
         # 描述
-        memberdescription = response.xpath('//*/ul[@class="memberdescriptionReviewEnhancements"]').extract_first()
-        print(memberdescription)
-        person['description'] = memberdescription
+        try:
+            # print("hello:{}".format(",".join(memberdescription.xpath(".//li/text()").extract())))
+            person['description'] = ",".join(memberdescription.xpath(".//li/text()").extract())
+        except:
+            person['description'] = 'N/A'
 
         # 性别
         genderObj = re.search('man(?= from)|Man(?= from)|woman(?= from)|Woman(?= from)',
-                              memberdescription)
+                              memberdescription.extract_first())
         try:
             reviewerGender = genderObj.group().lower()
         except:
-            reviewerGender = None
+            reviewerGender = 'N/A'
         person['gender'] = reviewerGender
         print("评论者性别：", end='')
         print(reviewerGender)
 
         # 年龄
-        ageObj = re.search('\d+-\d+|\d+\+', memberdescription)
+        ageObj = re.search('\d+-\d+|\d+\+', memberdescription.extract_first())
         try:
             reviewerAge = ageObj.group()
         except:
-            reviewerAge = None
+            reviewerAge = 'N/A'
 
         person['age'] = reviewerAge
         print("评论者年龄：", end='')
@@ -377,7 +384,7 @@ class TripadvSpider(Spider):
             memberTagReview = response.xpath('//*/a[@class="memberTagReviewEnhancements"]')
             travelerType = memberTagReview.text
         except:
-            travelerType = None
+            travelerType = 'N/A'
 
         person['member_type'] = travelerType
         print("评论者类型：", end='')
@@ -411,7 +418,7 @@ class TripadvSpider(Spider):
 
         # 评论
         chartRowReviewEnhancements = response.xpath('//*[@class="chartRowReviewEnhancements"]').extract()
-        reviewerExcellentRating = reviewerVeryGoodRating = reviewerAverageRating = reviewerPoorRating = reviewerTerribleRating = None
+        reviewerExcellentRating = reviewerVeryGoodRating = reviewerAverageRating = reviewerPoorRating = reviewerTerribleRating = 'N/A'
         for chartRow in chartRowReviewEnhancements:
             chartRowObj = re.search('(?<=>).*(?=</span>)', chartRow)
             chartRowtype = chartRowObj.group()
@@ -437,3 +444,4 @@ class TripadvSpider(Spider):
         person['review_dis'] = "{},{},{},{},{}".format(reviewerExcellentRating, reviewerVeryGoodRating,
                                                        reviewerAverageRating, reviewerPoorRating,
                                                        reviewerTerribleRating)
+        yield person

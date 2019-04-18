@@ -145,7 +145,6 @@ class RandomUserAgent(object):
 
     def process_exception(self, request, exception, spider):
         # 出现异常时（超时）使用代理
-        print(exception.name)
         print("\n出现异常，正在使用代理重试....\n")
         if request.meta['max'] > 0:
             current_proxy = requests.get(

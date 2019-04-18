@@ -22,7 +22,8 @@ class ReviewDetailSpider(scrapy.Spider):
     name = 'review_detail'
     allowed_domains = ['tripadvisor.com', 'tripadvisor.cn']
     start_urls = [
-        'https://www.tripadvisor.cn/Hotel_Review-g294212-d793789-Reviews-or15-Hotel_Kapok_Beijing-Beijing.html']
+        'https://www.tripadvisor.cn/Hotel_Review-g294212-d1916310-Reviews-or5-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html'
+    ]
     data = {'preferFriendReviews': 'FALSE',
             'filterSeasons': '',
             # 'filterLang': 'zhCN',  #
@@ -100,14 +101,27 @@ puid: XLKm58CoATAAAD6kMG8AAAHX
         reviewRating = ratingObj.group()
         comment['rating'] = reviewRating
 
+        try:
+            uid_src = response.xpath("//*[@class='member_info']").extract()
+            uidObj = re.search('(?<=UID_).*?(?=-SRC_)', str(uid_src[0]))
+            uid = uidObj.group()
+            print(uid)
+            srcObj = re.search('(?<=SRC_)\d+', str(uid_src[0]))
+            src = srcObj.group()
+            print(src)
+            yield Request(url=user_info_url.format(uid=uid, src=src), callback=self.parse_user)
+
+        except:
+            pass
+
+        '''
         uid_src = response.xpath("//*[@class='member_info']").extract()
         uidObj = re.search('(?<=UID_).*?(?=-SRC_)', str(uid_src[0]))
         uid = uidObj.group()
-        print(uid)
+
         srcObj = re.search('(?<=SRC_)\d+', str(uid_src[0]))
         src = srcObj.group()
-        print(src)
-        yield Request(url=user_info_url.format(uid=uid, src=src), callback=self.parse_user)
+        '''
 
     def parse_user(self, response):
         print(response.request.url)

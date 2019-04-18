@@ -102,3 +102,8 @@ MYSQL_USER = 'sspku'  # 数据库账号，请修改
 MYSQL_PASSWD = 'sspkubd04..'  # 数据库密码，请修改
 
 MYSQL_PORT = 3306  # 数据库端口，在dbhelper中使用
+
+proxy_order_id = ''
+proxy_user_name = ''
+proxy_pwd = ''
+proxy_request_url = ''
