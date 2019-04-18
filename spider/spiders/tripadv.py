@@ -52,7 +52,7 @@ class TripadvSpider(Spider):
                 lines = f.readlines()
                 for line in lines:
                     hotel_detail_url = line
-                    yield Request(pre_url + hotel_detail_url, callback=self.parse_detail_hotel, meta={'max': 3})
+                    yield Request((pre_url + hotel_detail_url).rstrip('%0A').strip(), callback=self.parse_detail_hotel, meta={'max': 3})
 
     def parse_neighbor_initial(self, response):
         xpath_neibor_nums = '//*[@id="taplc_main_pagination_bar_dusty_hotels_resp_0"]/div/div/div/div/a/text()'  # 页数列表，最后一项为页数
@@ -142,7 +142,7 @@ class TripadvSpider(Spider):
         except:
             rank_b = -1
         hotel['rank'] = rank_b
-        print(rank_b)
+        # print(rank_b)
 
         # 酒店中英文名称
         try:
@@ -333,12 +333,12 @@ class TripadvSpider(Spider):
 
     def parse_user(self, response):
         person = PersonItem()
-        print(response.request.url)
+        # print(response.request.url)
         contributor_text = response.text
         contributor_urlObj = re.search('/Profile.*(?=")', str(contributor_text))
         reviewerURL = 'https://www.tripadvisor.com' + contributor_urlObj.group()
-        print("评论者链接是：", end='')
-        print(reviewerURL)
+        # print("评论者链接是：", end='')
+        # print(reviewerURL)
 
         person['person_id'] = response.meta['uid']
 
@@ -351,9 +351,9 @@ class TripadvSpider(Spider):
             contributorLevel = 'N/A'
 
         person['grade'] = contributorLevel
-        print("评论者等级：", end='')
+        # print("评论者等级：", end='')
 
-        print(contributorLevel)
+        # print(contributorLevel)
 
         memberdescription = response.xpath('//*/ul[@class="memberdescriptionReviewEnhancements"]')
         # 描述
@@ -371,8 +371,8 @@ class TripadvSpider(Spider):
         except:
             reviewerGender = 'N/A'
         person['gender'] = reviewerGender
-        print("评论者性别：", end='')
-        print(reviewerGender)
+        # print("评论者性别：", end='')
+        # print(reviewerGender)
 
         # 年龄
         ageObj = re.search('\d+-\d+|\d+\+', memberdescription.extract_first())
@@ -382,8 +382,8 @@ class TripadvSpider(Spider):
             reviewerAge = 'N/A'
 
         person['age'] = reviewerAge
-        print("评论者年龄：", end='')
-        print(reviewerAge)
+        # print("评论者年龄：", end='')
+        # print(reviewerAge)
 
         # 类型
         try:
@@ -393,8 +393,8 @@ class TripadvSpider(Spider):
             travelerType = 'N/A'
 
         person['member_type'] = travelerType
-        print("评论者类型：", end='')
-        print(travelerType)
+        # print("评论者类型：", end='')
+        # print(travelerType)
 
         # 勋章
         badgeTextReviewEnhancements = response.xpath('//*/span[@class="badgeTextReviewEnhancements"]').extract()
@@ -414,8 +414,8 @@ class TripadvSpider(Spider):
             elif bandgetype == 'Photos' or bandgetype == 'Photo':
                 contributor_photosObj = re.search('\d+', str(badgetext))
                 reviewerPhotoNum = contributor_photosObj.group()
-        print('评论者评论总数，访问城市数目，发表照片数目，获得有用投票总数：', end='')
-        print(reviewerContributionNum, reviewerCityNum, reviewerHelpfulVotes, reviewerPhotoNum)
+        # print('评论者评论总数，访问城市数目，发表照片数目，获得有用投票总数：', end='')
+        # print(reviewerContributionNum, reviewerCityNum, reviewerHelpfulVotes, reviewerPhotoNum)
 
         person['review_total_num'] = reviewerContributionNum
         person['visited_city_num'] = reviewerCityNum
@@ -443,10 +443,10 @@ class TripadvSpider(Spider):
             elif chartRowtype == 'Terrible':
                 contributor_review_terribleObj = re.search('\d+(?=</span>)', str(chartRow))
                 reviewerTerribleRating = contributor_review_terribleObj.group()
-        print("各星评论数目：", end='')
-        print(reviewerExcellentRating, reviewerVeryGoodRating, reviewerAverageRating,
-              reviewerPoorRating,
-              reviewerTerribleRating)
+        # print("各星评论数目：", end='')
+        # print(reviewerExcellentRating, reviewerVeryGoodRating, reviewerAverageRating,
+        #       reviewerPoorRating,
+        #       reviewerTerribleRating)
         person['review_dis'] = "{},{},{},{},{}".format(reviewerExcellentRating, reviewerVeryGoodRating,
                                                        reviewerAverageRating, reviewerPoorRating,
                                                        reviewerTerribleRating)
