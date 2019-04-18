@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10f715dd-f5c0-48fe-a5b9-4895e18fece2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/spider/DBConnection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spider/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/middlewares.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spider/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/pipelines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spider/spiders/review_detail.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/spiders/review_detail.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spider/spiders/tripadv.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/spiders/tripadv.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,8 +19,8 @@
     <SUITE FILE_PATH="coverage/spider$reviews_detail.coverage" NAME="reviews_detail Coverage Results" MODIFIED="1555219736935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
     <SUITE FILE_PATH="coverage/spider$hotel_url.coverage" NAME="hotel_url Coverage Results" MODIFIED="1555375425410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
     <SUITE FILE_PATH="coverage/spider$city_url.coverage" NAME="city_url Coverage Results" MODIFIED="1555122110307" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
-    <SUITE FILE_PATH="coverage/spider$tripadv.coverage" NAME="tripadv Coverage Results" MODIFIED="1555486194767" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
-    <SUITE FILE_PATH="coverage/spider$review_detail.coverage" NAME="review_detail Coverage Results" MODIFIED="1555218224620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
+    <SUITE FILE_PATH="coverage/spider$tripadv.coverage" NAME="tripadv Coverage Results" MODIFIED="1555581366112" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
+    <SUITE FILE_PATH="coverage/spider$review_detail.coverage" NAME="review_detail Coverage Results" MODIFIED="1555594439290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
     <SUITE FILE_PATH="coverage/spider$pipelines.coverage" NAME="pipelines Coverage Results" MODIFIED="1555516085396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
     <SUITE FILE_PATH="coverage/spider$middlewares.coverage" NAME="middlewares Coverage Results" MODIFIED="1555570427280" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
   </component>
@@ -26,29 +28,29 @@
     <session id="-1980363279">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="17" />
+          <entry key="project.closed" value="20" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.2" value="1" />
-          <entry key="project.open.time.5" value="2" />
+          <entry key="project.open.time.5" value="5" />
           <entry key="project.open.time.6" value="9" />
           <entry key="project.open.time.7" value="3" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.opened" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="0" value="9" />
+          <entry key="0" value="13" />
           <entry key="cfg" value="1" />
           <entry key="gitignore" value="4" />
           <entry key="hotel,json" value="1" />
           <entry key="html" value="1" />
           <entry key="jl" value="1" />
           <entry key="json" value="48" />
-          <entry key="py" value="76" />
+          <entry key="py" value="78" />
           <entry key="scrapy" value="1" />
-          <entry key="txt" value="77" />
+          <entry key="txt" value="81" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -56,23 +58,24 @@
           <entry key="HTML" value="1" />
           <entry key="Ini" value="1" />
           <entry key="JSON" value="48" />
-          <entry key="PLAIN_TEXT" value="92" />
-          <entry key="Python" value="77" />
+          <entry key="PLAIN_TEXT" value="100" />
+          <entry key="Python" value="79" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+          <entry key="dummy" value="11" />
           <entry key="gitignore" value="65" />
           <entry key="json" value="67" />
-          <entry key="py" value="17575" />
-          <entry key="txt" value="17" />
+          <entry key="py" value="18149" />
+          <entry key="txt" value="18" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="67" />
-          <entry key="PLAIN_TEXT" value="82" />
-          <entry key="Python" value="17575" />
+          <entry key="PLAIN_TEXT" value="94" />
+          <entry key="Python" value="18149" />
         </counts>
       </usages-collector>
     </session>
@@ -102,16 +105,17 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spider/middlewares.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="83" column="39" lean-forward="true" selection-start-line="83" selection-start-column="39" selection-end-line="83" selection-end-column="39" />
+            <state relative-caret-position="242">
+              <caret line="153" column="39" selection-start-line="153" selection-start-column="39" selection-end-line="153" selection-end-column="39" />
               <folding>
                 <element signature="e#169#195#0" expanded="true" />
-                <element signature="e#447#2109#0" />
-                <marker date="1555572300289" expanded="true" signature="4053:4059" ph="..." />
-                <marker date="1555572300289" expanded="true" signature="5330:5339" ph="..." />
+                <element signature="e#431#2093#0" />
+                <element signature="e#2142#3785#0" />
+                <marker date="1555603807942" expanded="true" signature="4053:4059" ph="..." />
+                <marker date="1555603807942" expanded="true" signature="5284:5293" ph="..." />
               </folding>
             </state>
           </provider>
@@ -120,47 +124,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spider/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="25" column="26" lean-forward="true" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+            <state relative-caret-position="4">
+              <caret line="99" column="12" selection-start-line="99" selection-end-line="99" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/pipelines.py">
+        <entry file="file://$PROJECT_DIR$/spider/DBConnection.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="63" column="20" lean-forward="true" selection-start-line="63" selection-start-column="20" selection-end-line="63" selection-end-column="20" />
+            <state relative-caret-position="774">
+              <caret line="45" selection-start-line="45" selection-end-line="45" />
               <folding>
-                <element signature="e#194#205#0" expanded="true" />
+                <element signature="e#60#74#0" expanded="true" />
+                <marker date="1555596388063" expanded="true" signature="243:295" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spider/spiders/tripadv.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="130" column="29" lean-forward="true" selection-start-line="130" selection-start-column="29" selection-end-line="130" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/proxies.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -184,11 +162,12 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spider/spiders/review_detail.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3078">
-              <caret line="175" column="41" selection-start-line="175" selection-start-column="41" selection-end-line="175" selection-end-column="41" />
+            <state relative-caret-position="180">
+              <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
               <folding>
                 <element signature="e#24#37#0" expanded="true" />
-                <marker date="1555552579925" expanded="true" signature="639:644" ph="..." />
+                <marker date="1555595919785" expanded="true" signature="630:635" ph="..." />
+                <marker date="1555595919785" expanded="true" signature="4921:4932" ph="..." />
               </folding>
             </state>
           </provider>
@@ -205,10 +184,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>href</find>
-      <find>cookie</find>
-      <find>text.find_all</find>
-      <find>level</find>
       <find>}</find>
       <find>dalian</find>
       <find>Dalian</find>
@@ -231,6 +206,14 @@
       <find>review_total</find>
       <find>userfule_votes</find>
       <find>visited_</find>
+      <find>review_data</find>
+      <find>review_dat</find>
+      <find>quote</find>
+      <find>para</find>
+      <find>8</find>
+      <find>5</find>
+      <find>setting</find>
+      <find>neighbor</find>
     </findStrings>
     <replaceStrings>
       <replace>response.xpath</replace>
@@ -254,13 +237,16 @@
         <option value="$PROJECT_DIR$/data/hotel.json" />
         <option value="$PROJECT_DIR$/spider/spiders/city_url.py" />
         <option value="$PROJECT_DIR$/spider/items.py" />
-        <option value="$PROJECT_DIR$/spider/spiders/review_detail.py" />
-        <option value="$PROJECT_DIR$/spider/pipelines.py" />
-        <option value="$PROJECT_DIR$/proxies.txt" />
-        <option value="$PROJECT_DIR$/spider/middlewares.py" />
-        <option value="$PROJECT_DIR$/spider/settings.py" />
-        <option value="$PROJECT_DIR$/spider/spiders/tripadv.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/proxies.txt" />
+        <option value="$PROJECT_DIR$/spider/DBUtils.py" />
+        <option value="$PROJECT_DIR$/spider/settings.py" />
+        <option value="$PROJECT_DIR$/spider/pipelines.py" />
+        <option value="$PROJECT_DIR$/spider/spiders/review_detail.py" />
+        <option value="$PROJECT_DIR$/spider/spiders/tripadv.py" />
+        <option value="$PROJECT_DIR$/spider/DBConnection.py" />
+        <option value="$PROJECT_DIR$/hotel_links/Guilin_Guangxi_hotels.txt" />
+        <option value="$PROJECT_DIR$/spider/middlewares.py" />
       </list>
     </option>
   </component>
@@ -270,7 +256,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -280,7 +266,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -288,10 +273,27 @@
               <item name="spider" type="b2602c69:ProjectViewProjectNode" />
               <item name="spider" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="spider" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spider" type="462c0819:PsiDirectoryNode" />
+              <item name="hotel_links" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spider" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spider" type="462c0819:PsiDirectoryNode" />
+              <item name="spider" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spider" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spider" type="462c0819:PsiDirectoryNode" />
+              <item name="spider" type="462c0819:PsiDirectoryNode" />
+              <item name="spiders" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -312,7 +314,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.middlewares">
+  <component name="RunManager" selected="Python.review_detail">
     <configuration name="hotel_url" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="spider" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -379,7 +381,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="reviews_detail" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="review_detail" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="spider" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -392,7 +394,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/spider/spiders/reviews_detail.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/spider/spiders/review_detail.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -426,17 +428,17 @@
     <list>
       <item itemvalue="Python.tripadv" />
       <item itemvalue="Python.hotel_url" />
-      <item itemvalue="Python.reviews_detail" />
       <item itemvalue="Python.middlewares" />
       <item itemvalue="Python.pipelines" />
+      <item itemvalue="Python.review_detail" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.review_detail" />
+        <item itemvalue="Python.tripadv" />
         <item itemvalue="Python.middlewares" />
         <item itemvalue="Python.pipelines" />
-        <item itemvalue="Python.tripadv" />
         <item itemvalue="Python.hotel_url" />
-        <item itemvalue="Python.reviews_detail" />
       </list>
     </recent_temporary>
   </component>
@@ -466,7 +468,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3040057" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31688127" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -496,13 +498,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///anaconda3/envs/practices/lib/python3.7/re.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="182" selection-start-line="182" selection-end-line="182" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///anaconda3/envs/practices/lib/python3.7/site-packages/requests/api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -530,13 +525,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hotel_links/Dongguan_Guangdong_hotels.txt">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hotel_links/Guilin_Guangxi_hotels.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-14571">
-          <caret line="12" column="30" selection-start-line="12" selection-start-column="30" selection-end-line="12" selection-end-column="30" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hotel_links/Guiyang_Guizhou_hotels.txt">
       <provider selected="true" editor-type-id="text-editor">
@@ -578,13 +566,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-19469">
           <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hotel_links/Changchun_Jilin_hotels.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-45">
-          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -692,10 +673,52 @@
         <state relative-caret-position="-435" />
       </provider>
     </entry>
+    <entry file="file:///anaconda3/envs/practices/lib/python3.7/site-packages/pymysql/err.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="738">
+          <caret line="43" column="20" lean-forward="true" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/proxies.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="51" selection-start-line="2" selection-start-column="51" selection-end-line="2" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/screenlog.0">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15960">
+          <caret line="152" column="4" lean-forward="true" selection-start-line="152" selection-start-column="4" selection-end-line="152" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hotel_links/Changchun_Jilin_hotels.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/hotel_links/Anji_County_Zhejiang_hotels.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="76" lean-forward="true" selection-start-column="76" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spider/spiders/tripadv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="67" column="20" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -718,6 +741,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/spider/DBConnection.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="774">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
+          <folding>
+            <element signature="e#60#74#0" expanded="true" />
+            <marker date="1555596388063" expanded="true" signature="243:295" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/spider/items.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1458">
@@ -734,77 +768,52 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spider/spiders/review_detail.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3078">
-          <caret line="175" column="41" selection-start-line="175" selection-start-column="41" selection-end-line="175" selection-end-column="41" />
+        <state relative-caret-position="180">
+          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
           <folding>
             <element signature="e#24#37#0" expanded="true" />
-            <marker date="1555552579925" expanded="true" signature="639:644" ph="..." />
+            <marker date="1555595919785" expanded="true" signature="630:635" ph="..." />
+            <marker date="1555595919785" expanded="true" signature="4921:4932" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/proxies.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spider/pipelines.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="63" column="20" lean-forward="true" selection-start-line="63" selection-start-column="20" selection-end-line="63" selection-end-column="20" />
+        <state relative-caret-position="-64">
+          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
           <folding>
             <element signature="e#194#205#0" expanded="true" />
+            <marker date="1555594137252" expanded="true" signature="461:466" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spider/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="25" column="26" lean-forward="true" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+        <state relative-caret-position="4">
+          <caret line="99" column="12" selection-start-line="99" selection-end-line="99" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///anaconda3/envs/practices/lib/python3.7/site-packages/pymysql/err.py">
+    <entry file="file://$PROJECT_DIR$/hotel_links/Guilin_Guangxi_hotels.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="738">
-          <caret line="43" column="20" lean-forward="true" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="20" />
+        <state relative-caret-position="271">
+          <caret line="910" column="15" lean-forward="true" selection-start-line="910" selection-start-column="15" selection-end-line="910" selection-end-column="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/spider/middlewares.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="83" column="39" lean-forward="true" selection-start-line="83" selection-start-column="39" selection-end-line="83" selection-end-column="39" />
+        <state relative-caret-position="242">
+          <caret line="153" column="39" selection-start-line="153" selection-start-column="39" selection-end-line="153" selection-end-column="39" />
           <folding>
             <element signature="e#169#195#0" expanded="true" />
-            <element signature="e#447#2109#0" />
-            <marker date="1555572300289" expanded="true" signature="4053:4059" ph="..." />
-            <marker date="1555572300289" expanded="true" signature="5330:5339" ph="..." />
+            <element signature="e#431#2093#0" />
+            <element signature="e#2142#3785#0" />
+            <marker date="1555603807942" expanded="true" signature="4053:4059" ph="..." />
+            <marker date="1555603807942" expanded="true" signature="5284:5293" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/screenlog.0">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2322">
-          <caret line="129" column="17" selection-start-line="129" selection-start-column="17" selection-end-line="129" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spider/spiders/tripadv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="130" column="29" lean-forward="true" selection-start-line="130" selection-start-column="29" selection-end-line="130" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="12" lean-forward="true" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>

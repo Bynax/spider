@@ -134,7 +134,12 @@ class TripadvSpider(Spider):
         for n in range(1, page_nums):
             review_page_url = re.sub('.+Reviews', url_start.group() + '-or' + str(n * 5), response.request.url)
             review_page_urls.append(review_page_url)
-            yield Request(review_page_url, callback=self.parse_review, meta={'max': 3})
+            headers = {
+                "X-Requested-With": "XMLHttpRequest",
+
+            }
+            yield FormRequest(review_page_url, formdata=review_data, method="post", callback=self.parse_review,
+                              meta={'max': 3}, headers=headers)
 
         # 排名
         try:
@@ -303,7 +308,7 @@ class TripadvSpider(Spider):
             p = response.xpath('//*/p[@class="partial_entry"]').extract()
             body = re.search('(?<=>).*(?=<)', str(p[0]))
             reviewText = re.sub('<br>|<br/>', '', body.group())
-            comment['content'] = reviewText if len(reviewText)<1024 else reviewText[0:1024]
+            comment['content'] = reviewText if len(reviewText) < 1024 else reviewText[0:1024]
 
             # 评论日期
             ratingDate = response.xpath('//*/span[@class="ratingDate relativeDate"]').extract()
@@ -399,7 +404,7 @@ class TripadvSpider(Spider):
 
         # 勋章
         badgeTextReviewEnhancements = response.xpath('//*/span[@class="badgeTextReviewEnhancements"]').extract()
-        reviewerContributionNum = reviewerCityNum = reviewerPhotoNum = reviewerHelpfulVotes = None
+        reviewerContributionNum = reviewerCityNum = reviewerHelpfulVotes = None
         for badgetext in badgeTextReviewEnhancements:
             bandgetypeObj = re.search('(?<=\d\s).*(?=</span>)', badgetext)
             bandgetype = bandgetypeObj.group()
@@ -412,10 +417,6 @@ class TripadvSpider(Spider):
             elif bandgetype == 'Helpful votes' or bandgetype == 'Helpful vote':
                 contributor_helpful_votesObj = re.search('\d+', str(badgetext))
                 reviewerHelpfulVotes = contributor_helpful_votesObj.group()
-            elif bandgetype == 'Photos' or bandgetype == 'Photo':
-                contributor_photosObj = re.search('\d+', str(badgetext))
-        # print('评论者评论总数，访问城市数目，发表照片数目，获得有用投票总数：', end='')
-        # print(reviewerContributionNum, reviewerCityNum, reviewerHelpfulVotes, reviewerPhotoNum)
 
         person['review_total_num'] = 'N/A' if reviewerContributionNum is None else str(reviewerContributionNum)
         person['visited_city_num'] = 'N/A' if reviewerCityNum is None else str(reviewerCityNum)
@@ -443,11 +444,28 @@ class TripadvSpider(Spider):
             elif chartRowtype == 'Terrible':
                 contributor_review_terribleObj = re.search('\d+(?=</span>)', str(chartRow))
                 reviewerTerribleRating = contributor_review_terribleObj.group()
-        # print("各星评论数目：", end='')
-        # print(reviewerExcellentRating, reviewerVeryGoodRating, reviewerAverageRating,
-        #       reviewerPoorRating,
-        #       reviewerTerribleRating)
         person['review_dis'] = "{},{},{},{},{}".format(reviewerExcellentRating, reviewerVeryGoodRating,
                                                        reviewerAverageRating, reviewerPoorRating,
                                                        reviewerTerribleRating)
         yield person
+
+# if __name__ == '__main__':
+#     review_data = {'preferFriendReviews': 'FALSE',
+#                    'filterSeasons': '',
+#                    'filterLang': 'ALL',  #
+#                    'reqNum': '1',
+#                    'isLastPoll': 'false',
+#                    # 'paramSeqId': 1,
+#                    'changeSet': 'REVIEW_LIST',
+#                    # 'puid': 'W@q@6AoQI4UAALjdO38AAABN'
+#                    }  # puid
+#     url = 'https://www.tripadvisor.cn/Hotel_Review-g298556-d10466401-Reviews-or15-Ease_Hostel-Guilin_Guangxi.html'
+#     url2 = 'https://www.tripadvisor.cn/Hotel_Review-g294212-d1916310-Reviews-or5-Days_Hotel_Beijing_New_Exhibition_Center-Beijing.html'
+#     url3 = 'https://www.tripadvisor.cn/Hotel_Review-g298556-d1960177-Reviews-Guilin_Ming_Palace_International_Youth_Hostel-Guilin_Guangxi.html'
+#     headers = {
+#                   "X-Requested-With": "XMLHttpRequest",
+#                   "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
+#     }
+#     res = requests.get(url3, headers=headers)
+#     print(res.text)
+#     print(res.status_code)

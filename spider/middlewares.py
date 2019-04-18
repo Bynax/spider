@@ -121,7 +121,6 @@ class RandomUserAgent(object):
     def process_request(self, request, spider):
         ua = UserAgent(verify_ssl=False)
         print("正在处理:{}".format(request.url))
-        print("使用代理{}".format(current_proxy))
         request.meta['proxy'] = current_proxy
         request.headers['User-Agent'] = ua.random
         if spider.name == 'review_detail':
@@ -152,6 +151,8 @@ class RandomUserAgent(object):
         print("\n出现异常，正在使用代理重试....\n")
         if isinstance(exception, pymysql.DatabaseError):
             raise IgnoreRequest("数据库错误，不做处理")
+        print("异常信息{}".format(exception.message))
+
         if request.meta['max'] > 0:
             lines = self.get_proxies()
             current_proxy = lines[random.randint(0, len(lines) - 1)].strip()

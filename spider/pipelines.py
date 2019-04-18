@@ -7,11 +7,8 @@
 
 import json
 import six
-import pymysql as pq  # 导入pymysql
-
+from spider import DBConnection as pool
 from spider.items import NeighborHotel, CommentItem, PersonItem, HotelItem
-from scrapy.utils.project import get_project_settings
-
 
 class SpiderPipeline(object):
     def process_item(self, item, spider):
@@ -19,13 +16,6 @@ class SpiderPipeline(object):
 
 
 class JsonWriterPipeline(object):
-    def __init__(self):
-        setting = get_project_settings()
-
-        self.conn = pq.connect(host=setting.get('MYSQL_HOST'), user=setting.get('MYSQL_USER'),
-                               port=setting.get('MYSQL_PORT'),
-                               passwd=setting.get('MYSQL_PASSWD'), db=setting.get('MYSQL_DBNAME'), charset='utf8')
-        self.cur = self.conn.cursor()
 
     def process_item(self, item, spider):
         if spider.name == 'hotel_url':
@@ -63,18 +53,12 @@ class JsonWriterPipeline(object):
             for (key, value) in six.iteritems(item):
                 sql += "{} = '{}', ".format(key, value if "'" not in value else value.replace("'", "\\'"))
             sql = sql[:-2]
-            self.cur.execute(sql)  # 执行SQL
-            self.conn.commit()  # 写入操作
-            # with io.open(os.path.join(os.path.abspath(os.getcwd()), 'data/{}'.format(file_name)),
-            #              'a+', encoding='utf-8')as f:
-            #     line = json.dumps(dict(item), ensure_ascii=False) + "\n"
-            #     f.write(line)
-
+            with pool.get_db_connect() as db:
+                db.cursor.execute(sql)
+                db.conn.commit()
             return item
         else:
             return item
 
     def close_spider(self, spider):
-        self.cur.close()
-        self.conn.close()
-
+        pass
