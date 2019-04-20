@@ -11,8 +11,11 @@ from fake_useragent import UserAgent
 import random
 import os
 import pymysql
+from scrapy.spidermiddlewares.httperror import HttpError
+from twisted.internet.error import DNSLookupError
+from twisted.internet.error import TimeoutError
 
-current_proxy = 'http://a6d4348e218e:qwmcu5rqmi@203.195.252.36:21686'
+current_proxy = 'http://8289a8e1c8b8:cj9nqcftpp@115.159.160.45:22979'
 
 
 class SpiderSpiderMiddleware(object):
@@ -135,8 +138,6 @@ class RandomUserAgent(object):
                 print('状态码非200')
                 # 请求新的地址
                 current_proxy = lines[random.randint(0, len(lines) - 1)].strip()
-                # print("this is response ip:" + proxy)
-                # 对当前reque加上代理
                 request.meta['proxy'] = current_proxy
                 print("更换代理为{}".format(current_proxy))
                 request.meta['max'] = (int(request.meta['max'])) - 1
@@ -151,17 +152,9 @@ class RandomUserAgent(object):
         print("\n出现异常，正在使用代理重试....\n")
         if isinstance(exception, pymysql.DatabaseError):
             raise IgnoreRequest("数据库错误，不做处理")
-        print("异常信息{}".format(exception.message))
-
-        if request.meta['max'] > 0:
+        if isinstance(exception, (HttpError, DNSLookupError, TimeoutError)):
             lines = self.get_proxies()
             current_proxy = lines[random.randint(0, len(lines) - 1)].strip()
             # 对当前reque加上代理
-            request.meta['proxy'] = current_proxy
             print("更换代理为{}".format(current_proxy))
-            request.meta['max'] = (int(request.meta['max'])) - 1
-            return request
-        else:
             raise IgnoreRequest("超过最大请求，{}\t被跳过".format(request.url))
-
-

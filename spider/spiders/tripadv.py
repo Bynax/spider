@@ -4,6 +4,9 @@ import re
 import math
 from spider.items import HotelItem, NeighborHotel, CommentItem, PersonItem
 import os, datetime
+from scrapy.spidermiddlewares.httperror import HttpError
+from twisted.internet.error import DNSLookupError
+from twisted.internet.error import TimeoutError
 
 pre_url = 'https://www.tripadvisor.cn'
 user_info_url = 'https://www.tripadvisor.com/MemberOverlay?Mode=owa&uid={uid}&c=&src={src}&fus=false&partner=false&LsoId=&metaReferer=ShowUserReviewsHotels'
@@ -11,7 +14,7 @@ detail_review_url = 'https://www.tripadvisor.com/OverlayWidgetAjax'
 
 review_data = {'preferFriendReviews': 'FALSE',
                'filterSeasons': '',
-               'filterLang': 'zhCN',  #
+               'filterLang': 'ALL',  #
                'reqNum': '1',
                'isLastPoll': 'false',
                # 'paramSeqId': 1,
@@ -52,7 +55,7 @@ class TripadvSpider(Spider):
                 for line in lines:
                     hotel_detail_url = line
                     yield Request((pre_url + hotel_detail_url).rstrip('%0A').strip(), callback=self.parse_detail_hotel,
-                                  meta={'max': 3})
+                                  meta={'max': 3},errback=self.errback)
 
     def parse_neighbor_initial(self, response):
         xpath_neibor_nums = '//*[@id="taplc_main_pagination_bar_dusty_hotels_resp_0"]/div/div/div/div/a/text()'  # 页数列表，最后一项为页数
@@ -75,7 +78,7 @@ class TripadvSpider(Spider):
         page_num = min(int(neighbor_nums), 5)
         for i in range(page_num):
             page_url = re.sub('.+\d+', url_start.group() + '-oa' + str(i * 30), response.request.url)
-            yield Request(page_url, callback=self.parse_neighbor, meta={'max': 3})
+            yield Request(page_url, callback=self.parse_neighbor, meta={'max': 3},errback=self.errback)
 
     def parse_neighbor(self, response):
         links = response.xpath('//*[@class="listing_title"]/a/@href').extract()
@@ -114,40 +117,47 @@ class TripadvSpider(Spider):
             pic_num = 'N/A'
         else:
             pic_num = ''.join(pics_num)
-        hotel['pics_num'] = pic_num
+        hotel['pics_num'] = pic_num if pic_num is not None else 'N/A'
 
         # 点评数量
         review = response.xpath(xpath_review_count)
         if review is None:
             review_count = 'N/A'
         else:
-            textObj = re.sub(',', '', review.extract_first())
-            text = re.search('\d+', textObj)
-            review_count = text.group()
-        hotel['comment_num'] = review_count
+            try:
+                textObj = re.sub(',', '', review.extract_first())
+                text = re.search('\d+', textObj)
+                review_count = text.group()
+            except:
+                review_count = 'N/A'
+        hotel['comment_num'] = review_count if review_count is not None else 'N/A'
 
         # 找出评论页面
-        url_start = re.search('.+Reviews', response.request.url)
-        review_page_urls = []
-        review_page_urls.append(response.request.url)
-        page_nums = min((math.ceil(math.ceil(int(review_count) / 5)), 100))
-        for n in range(1, page_nums):
-            review_page_url = re.sub('.+Reviews', url_start.group() + '-or' + str(n * 5), response.request.url)
-            review_page_urls.append(review_page_url)
-            headers = {
-                "X-Requested-With": "XMLHttpRequest",
+        try:
+            int(review_count)
+            url_start = re.search('.+Reviews', response.request.url)
+            review_page_urls = []
+            review_page_urls.append(response.request.url)
+            page_nums = min((math.ceil(math.ceil(int(review_count) / 5)), 10))
+            for n in range(1, page_nums):
+                review_page_url = re.sub('.+Reviews', url_start.group() + '-or' + str(n * 5), response.request.url)
+                review_page_urls.append(review_page_url)
+                headers = {
+                    "X-Requested-With": "XMLHttpRequest",
 
-            }
-            yield FormRequest(review_page_url, formdata=review_data, method="post", callback=self.parse_review,
-                              meta={'max': 3}, headers=headers)
+                }
+                yield FormRequest(review_page_url, formdata=review_data, method="post", callback=self.parse_review,
+                                  meta={'max': 3}, headers=headers,errback=self.errback)
+        except:
+            pass
 
         # 排名
         try:
             rank = response.xpath(xpath_rank)
             rank_b = "".join(re.findall('\d+', rank.xpath('.//b/text()').extract_first()))
         except:
-            rank_b = -1
-        hotel['rank'] = rank_b
+            rank_b = 'N/A'
+        hotel['rank'] = rank_b if rank_b is not None else 'N/A'
         # print(rank_b)
 
         # 酒店中英文名称
@@ -159,19 +169,22 @@ class TripadvSpider(Spider):
             cn_name = 'N/A'
             en_name = 'N/A'
 
-        hotel['hotel_name_cn'] = cn_name
-        hotel['hotel_name_en'] = en_name
+        hotel['hotel_name_cn'] = cn_name if cn_name is not None else 'N/A'
+        hotel['hotel_name_en'] = en_name if en_name is not None else 'N/A'
 
         # 酒店评分得分
-        hotel_grade = response.xpath(xpath_grade).extract_first()
-        hotel['grade'] = hotel_grade
+        try:
+            hotel_grade = response.xpath(xpath_grade).extract_first()
+        except:
+            hotel_grade = 'N/A'
+        hotel['grade'] = hotel_grade if hotel_grade is not None else 'N/A'
 
         # 具体地址
         try:
             hotel_address = response.xpath(xpath_address).extract_first()
         except:
             hotel_address = 'N/A'
-        hotel['address'] = hotel_address
+        hotel['address'] = hotel_address if hotel_address is not None else 'N/A'
 
         # 奖项与认证
         badgesObj = response.xpath(xpath_award).extract()
@@ -185,8 +198,8 @@ class TripadvSpider(Spider):
                 s = badgesObj.find('span', class_='award_text')
                 hotelAwards = s.text + hotelAwards
         except:
-            pass
-        hotel['award'] = hotelAwards
+            hotelAwards = 'N/a'
+        hotel['award'] = hotelAwards if hotelAwards is not None else 'N/A'
 
         # 宾馆特色
         try:
@@ -195,7 +208,7 @@ class TripadvSpider(Spider):
         except:
             hotelStyle = 'N/A'
 
-        hotel['style'] = hotelStyle
+        hotel['style'] = hotelStyle if hotelStyle is not None else 'N/A'
 
         # 酒店特色
         try:
@@ -208,7 +221,7 @@ class TripadvSpider(Spider):
 
         except:
             hotel_feature = 'N/A'
-        hotel['feature'] = hotel_feature
+        hotel['feature'] = hotel_feature if hotel_feature is not None else 'N/A'
 
         # 客房类型
         try:
@@ -224,14 +237,14 @@ class TripadvSpider(Spider):
         except:
             room_type = 'N/A'
 
-        hotel['room_type'] = room_type
+        hotel['room_type'] = room_type if room_type is not None else 'N/A'
 
         # 酒店星级
         try:
             star = "".join(re.findall('\d+', response.xpath(xpath_star).extract_first()))
         except:
             star = 'N/A'
-        hotel['star'] = star
+        hotel['star'] = star if star is not None else 'N/A'
 
         # 房间数量
         try:
@@ -243,7 +256,7 @@ class TripadvSpider(Spider):
             int(rooms)
         except:
             rooms = 'N/A'
-        hotel['rooms'] = rooms
+        hotel['rooms'] = rooms if rooms is not None else 'N/A'
 
         # 优惠价钱
         prices = []
@@ -262,16 +275,19 @@ class TripadvSpider(Spider):
         except:
             prices = 'N/A'
 
-        hotel['youhui'] = ",".join(prices)
+        youhui = ",".join(prices)
+        hotel['youhui'] = youhui if youhui is not None else 'N/A'
         hotel['hotel_city'] = parse_city_id(response.request.url)
         hotel['hotel_id'] = parse_hotel_id(response.request.url)
         yield hotel
 
-        neighbor = response.xpath(xpath_neighbor).extract()[-1]
-        neighbor_url = "{}{}".format(pre_url, neighbor)
-
-        # 字符串
-        yield Request(neighbor_url, callback=self.parse_neighbor_initial, meta={'max': 3})
+        try:
+            neighbor = response.xpath(xpath_neighbor).extract()[-1]
+            neighbor_url = "{}{}".format(pre_url, neighbor)
+            # 字符串
+            yield Request(neighbor_url,errback=self.errback, callback=self.parse_neighbor_initial, meta={'max': 3})
+        except:
+            pass
 
     def parse_review(self, response):
         review = response.xpath('//*[@class="quote"]')
@@ -287,7 +303,7 @@ class TripadvSpider(Spider):
                       'metaReferer': 'Restaurant_Review',
                       'reviews': id}
 
-            yield FormRequest(detail_review_url, formdata=params, callback=self.parse_review_detail, method='GET',
+            yield FormRequest(detail_review_url,errback=self.errback, formdata=params, callback=self.parse_review_detail, method='GET',
                               meta={'id': id, 'max': 3, 'hotel_id': hotel_id})
 
     def parse_review_detail(self, response):
@@ -332,7 +348,7 @@ class TripadvSpider(Spider):
             comment['person'] = uid
             yield comment
             if uid is not None:
-                yield Request(url=user_info_url.format(uid=uid, src=src), callback=self.parse_user,
+                yield Request(url=user_info_url.format(uid=uid, src=src),errback=self.errback, callback=self.parse_user,
                               meta={'max': 3, 'uid': uid})
         except:
             pass
@@ -448,6 +464,30 @@ class TripadvSpider(Spider):
                                                        reviewerAverageRating, reviewerPoorRating,
                                                        reviewerTerribleRating)
         yield person
+
+    # errorback方法
+    def errback(self, failure):
+        # log all errback failures,
+        # in case you want to do something special for some errors,
+        # you may need the failure's type
+        self.logger.error(repr(failure))
+
+        # if isinstance(failure.value, HttpError):
+        if failure.check(HttpError):
+            # you can get the response
+            response = failure.value.response
+            self.logger.error('HttpError on %s', response.url)
+
+        # elif isinstance(failure.value, DNSLookupError):
+        elif failure.check(DNSLookupError):
+            # this is the original request
+            request = failure.request
+            self.logger.error('DNSLookupError on %s', request.url)
+
+        # elif isinstance(failure.value, TimeoutError):
+        elif failure.check(TimeoutError):
+            request = failure.request
+            self.logger.error('TimeoutError on %s', request.url)
 
 # if __name__ == '__main__':
 #     review_data = {'preferFriendReviews': 'FALSE',
