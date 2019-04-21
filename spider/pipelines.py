@@ -8,7 +8,8 @@
 import json
 import six
 from spider import DBConnection as pool
-from spider.items import NeighborHotel, CommentItem, PersonItem, HotelItem
+from spider.items import NeighborHotel, CommentItem, PersonItem, HotelItem, CityItem
+
 
 class SpiderPipeline(object):
     def process_item(self, item, spider):
@@ -25,9 +26,21 @@ class JsonWriterPipeline(object):
                 f.write(item['hotel_link'] + "\n")
             return item
         elif spider.name == 'city_url':
-            line = json.dumps(dict(item)) + "\n"
-            with open('{}.json'.format(spider.name), "a+", encoding="utf-8")as f:
-                f.write(line)
+            table_name = 'city'
+            col_str = ''
+            row_str = ''
+            for key in item.keys():
+                col_str = col_str + " " + key + ","
+                row_str = "{}'{}',".format(row_str,
+                                           item[key] if "'" not in item[key] else item[key].replace("'", "\\'"))
+                sql = 'insert INTO {} ({}) VALUES ({}) ON DUPLICATE KEY UPDATE '.format(table_name, col_str[1:-1],
+                                                                                        row_str[:-1])
+            for (key, value) in six.iteritems(item):
+                sql += "{} = '{}', ".format(key, value if "'" not in value else value.replace("'", "\\'"))
+            sql = sql[:-2]
+            with pool.get_db_connect() as db:
+                db.cursor.execute(sql)
+                db.conn.commit()
             return item
         # 其他的字段都是表，写入csv文件
         elif spider.name == 'hotel_detail':
@@ -39,6 +52,7 @@ class JsonWriterPipeline(object):
                 table_name = 'hotel'
             elif isinstance(item, PersonItem):
                 table_name = 'person'
+
             else:
                 return item
 

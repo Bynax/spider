@@ -15,7 +15,7 @@ from scrapy.spidermiddlewares.httperror import HttpError
 from twisted.internet.error import DNSLookupError
 from twisted.internet.error import TimeoutError
 
-current_proxy = 'http://8289a8e1c8b8:cj9nqcftpp@115.159.160.45:22979'
+current_proxy = 'http://4e1b29822ffd:km5h4r2xyy@203.195.252.36:21686'
 
 
 class SpiderSpiderMiddleware(object):
