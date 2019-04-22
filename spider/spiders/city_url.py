@@ -2,6 +2,7 @@
 from scrapy import Request, Spider
 from spider.items import CityItem
 import re
+import requests
 
 # 51页的时候是20*50
 
@@ -68,5 +69,6 @@ class CityUrlSpider(Spider):
         print('{},{},{},{}'.format(city['city_id'], city['city_name'], city['province'], city['hotel_num']))
 
 if __name__ == '__main__':
-    for i in range(100,200):
-        print(i)
+
+    res = requests.get('https://www.tripadvisor.cn/Attractions-g294211-Activities-oa20-China.html')
+    print(res.text)

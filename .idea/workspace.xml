@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10f715dd-f5c0-48fe-a5b9-4895e18fece2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/middlewares.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spider/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/pipelines.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spider/spiders/city_url.py" beforeDir="false" afterPath="$PROJECT_DIR$/spider/spiders/city_url.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,7 +13,7 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/spider$reviews_detail.coverage" NAME="reviews_detail Coverage Results" MODIFIED="1555219736935" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
     <SUITE FILE_PATH="coverage/spider$hotel_url.coverage" NAME="hotel_url Coverage Results" MODIFIED="1555375425410" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
-    <SUITE FILE_PATH="coverage/spider$city_url.coverage" NAME="city_url Coverage Results" MODIFIED="1555840572835" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
+    <SUITE FILE_PATH="coverage/spider$city_url.coverage" NAME="city_url Coverage Results" MODIFIED="1555845663963" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
     <SUITE FILE_PATH="coverage/spider$tripadv.coverage" NAME="tripadv Coverage Results" MODIFIED="1555637917130" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
     <SUITE FILE_PATH="coverage/spider$review_detail.coverage" NAME="review_detail Coverage Results" MODIFIED="1555594439290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider/spiders" />
     <SUITE FILE_PATH="coverage/spider$pipelines.coverage" NAME="pipelines Coverage Results" MODIFIED="1555516085396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/spider" />
@@ -27,7 +24,7 @@
     <session id="-1980363279">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="31" />
+          <entry key="project.closed" value="32" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.2" value="1" />
@@ -67,7 +64,7 @@
           <entry key="dummy" value="11" />
           <entry key="gitignore" value="65" />
           <entry key="json" value="67" />
-          <entry key="py" value="20039" />
+          <entry key="py" value="20078" />
           <entry key="txt" value="19" />
         </counts>
       </usages-collector>
@@ -76,7 +73,7 @@
           <entry key="Ini" value="34" />
           <entry key="JSON" value="67" />
           <entry key="PLAIN_TEXT" value="95" />
-          <entry key="Python" value="20039" />
+          <entry key="Python" value="20078" />
         </counts>
       </usages-collector>
     </session>
@@ -86,11 +83,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spider/spiders/city_url.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="58" column="17" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+            <state relative-caret-position="207">
+              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
               <folding>
                 <element signature="e#24#58#0" expanded="true" />
-                <marker date="1555840570506" expanded="true" signature="1342:1345" ph="..." />
+                <marker date="1555845663950" expanded="true" signature="1358:1361" ph="..." />
               </folding>
             </state>
           </provider>
@@ -216,7 +213,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pic_num</find>
       <find>age</find>
       <find>photo</find>
       <find>youhui</find>
@@ -246,6 +242,7 @@
       <find>Request</find>
       <find>len</find>
       <find>6633835</find>
+      <find>大连</find>
     </findStrings>
     <replaceStrings>
       <replace>response.xpath</replace>
@@ -507,7 +504,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32891566" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49928468" visible="true" weight="0.32771084" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49928468" weight="0.32771084" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -739,11 +736,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spider/spiders/city_url.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="58" column="17" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
+        <state relative-caret-position="207">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
           <folding>
             <element signature="e#24#58#0" expanded="true" />
-            <marker date="1555840570506" expanded="true" signature="1342:1345" ph="..." />
+            <marker date="1555845663950" expanded="true" signature="1358:1361" ph="..." />
           </folding>
         </state>
       </provider>
